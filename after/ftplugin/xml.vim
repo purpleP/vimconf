@@ -1,0 +1,2 @@
+setlocal omnifunc=xmlcomplete#CompleteTags
+packadd MatchTagAlways

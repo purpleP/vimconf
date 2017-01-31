@@ -1,0 +1,28 @@
+snippet '(fu(?:n|nc|nct|ncti|nctio|nction)?)(!?)' "vimscript function" br
+`!p snip.rv = match.group(1) + (match.group(2) or '')` ${1:Name}(${2:args})
+    ${3}
+end`!p snip.rv = match.group(1)`
+endsnippet
+
+snippet if "If statement" b
+if ${1:condition}
+    ${2:${VISUAL}}
+endif
+endsnippet
+
+snippet ag "Auto command group" b
+augroup ${1:GroupName}
+    ${2:au!}
+    ${3:${VISUAL}}
+augroup END
+endsnippet
+
+snippet au "Autocommand" b
+au ${1:WinEnter} ${2:*} ${3:call }
+endsnippet
+
+snippet f "for loop" b
+for ${1:item} in ${2:items}
+    ${3}
+endfor
+endsnippet

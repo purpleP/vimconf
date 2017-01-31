@@ -1,0 +1,20 @@
+[user]
+	email = warrior2031@gmail.com
+	name = Michael Doronin
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+	path = vimdiff
+[alias]
+	d = difftool
+    a = !sh -c 'cd "$1" && shift && git add -- "$@" && git status' --
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+[merge]
+	tool = vimdiff
+[mergetool]
+	prompt = true
+[mergetool "vimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[core]
+	excludesfile = ~/.gitignore_global

@@ -1,0 +1,27 @@
+#! /usr/bin/env zsh
+
+setopt pipefail
+comm=$1
+shift
+case $comm in
+    pytest)
+        force_color="--color=yes"
+        ;;
+    *)
+        force_color=""
+esac
+$comm $force_color $@ | tee /tmp/out
+if [[ $? -eq 0 ]]; then
+    sleep 1
+    tmux select-pane -t.0 \; resize-pane -Z
+else
+    line_count=$(wc -l /tmp/out | awk '{print $1}')
+    if [[ $line_count -gt $LINES ]]; then
+        grep -q -e '(Pdb\(++\)\?)' /tmp/out
+        if [[ $? -eq 1 ]]; then
+            less +G /tmp/out
+        fi
+    fi
+    tmux select-pane -t.0
+fi
+unsetopt pipefail

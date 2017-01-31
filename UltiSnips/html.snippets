@@ -1,0 +1,9 @@
+snippet t "xml or html tag" b
+<$1>
+	${VISUAL}
+</${1/(\w+).*/$1/}>
+endsnippet
+
+snippet l "polymer link" b
+<link rel="import" href="$1/$2/$2.html"/>
+endsnippet

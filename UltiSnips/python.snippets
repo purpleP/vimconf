@@ -1,0 +1,164 @@
+global !p
+import sys
+from os.path import expanduser, join
+sys.path.append(join(expanduser('~'), 'vimconf/UltiSnips/helpers'))
+from helpers import *
+endglobal
+
+snippet f "from import" "in_imports(snip)" be
+from ${1} import ${2}
+endsnippet
+
+snippet i "import" b
+import 
+endsnippet
+
+snippet f "comprehension" "not in_imports(snip)" we
+${3:$1} for ${1:item} in ${2}
+endsnippet
+
+
+snippet for "for loop" "have_visual_placeholder(snip)" be
+for ${1:item} in ${2}:
+    ${3:${VISUAL}}
+endsnippet
+
+
+snippet al "SqlAlchemy Column" b
+${1} = Column(${2})
+endsnippet
+
+snippet fk "SqlAlchemy foreign key"  w
+ForeignKey('${1}.${2:id}')
+endsnippet
+
+snippet pk "SqlAlchemy primary key contraint" w
+primary_key=True
+endsnippet
+
+snippet nl "SqlAlchemy non nullable" w
+nullable=False
+endsnippet
+
+snippet fixture "pytest fixture" b
+@pytest.fixture(${1})
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet test "pytest test" b
+def test_${1:name}(${2}):
+    ${3:assert False}`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+    `
+endsnippet
+
+snippet a "assert " b
+assert 
+endsnippet
+
+snippet r "return" b
+return
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet c "new class" b
+class ${1:name}:
+    ${2:${VISUAL:pass}}
+endsnippet
+
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet pdec "decorator with parameters" "lang_context(snip) in ('async def', 'def', 'module')" be
+def ${1:name}(${2}):
+    def dec(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            f(*args, **kwargs)
+        return wrapper`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+    return dec
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet dec "decorator" "lang_context(snip) in ('async def', 'def', 'module')" be
+def ${1:name}(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        f(*args, **kwargs)
+    return wrapper`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet ad "Async function" "lang_context(snip) in ('async def', 'def', 'module')" be
+async def ${1:name}(${2}):
+    ${3:${VISUAL:pass}}`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet ad "Async method" "lang_context(snip) == 'class'" be
+async def ${1:name}(self${2}):
+    ${3:${VISUAL:pass}}`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet d "Python function" "lang_context(snip) in ('async def','def', 'module')" be
+def ${1:name}(${2}):
+    ${3:${VISUAL:pass}}`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+endsnippet
+
+pre_expand "expand_method_in_right_place(snip)"
+snippet d "Python method" "lang_context(snip) == 'class'" be
+def ${1:name}(self, ${2}):
+    ${3:${VISUAL:pass}}`!p
+format_function(tabstops=t, name_index=1, params_index=2)
+`
+endsnippet
+
+snippet l "Lambda function" w
+lambda ${1:x}: ${2:$1} 
+endsnippet
+
+snippet try "try block" b
+try:
+    ${1:${VISUAL}}
+except ${2:Exception}${3: as e}:
+    raise${3/ as( \w+)/$1/}
+endsnippet
+
+snippet w "Python while loop" b
+while ${1:True}:
+    ${2:${VISUAL}}
+endsnippet
+
+snippet with "Python with statement" b
+with ${1:open()} as ${2:resource}:
+    ${3:${VISUAL}}
+endsnippet
+
+snippet if "Python conditional" b
+if ${1:condition}:
+    ${2:${VISUAL}}
+endsnippet
+
+snippet ifm "Python if main" b
+if __name__ == '__main__':
+    ${1:${VISUAL:pass}}
+endsnippet
+
+snippet p "Python print" b
+print(${1})
+endsnippet
+
+snippet e "Python else statement" b
+else:
+    ${1:${VISUAL}}
+endsnippet

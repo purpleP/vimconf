@@ -1,0 +1,12 @@
+*v*env
+*.log
+*.db
+.idea
+.DS_Store
+.DS_Store?
+.*
+doc/tags
+!.gitignore
+*.jar
+*.zip
+Session.vim

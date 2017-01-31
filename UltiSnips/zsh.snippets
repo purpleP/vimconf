@@ -1,0 +1,29 @@
+snippet if "If statement" b
+if [[ ${1:condition} ]]; then
+    ${2:echo 'true'}
+fi
+endsnippet
+
+snippet c "case expression" b
+case ${1:something} in
+    ${2:case}
+esac
+endsnippet
+
+snippet cs "one case in case expression" b
+${1:*)}
+    ${2:case}
+    ;;
+endsnippet
+
+snippet w "while loop" b
+while [ ${1:condition} ]; do
+    ${2:something}
+done
+endsnippet
+
+snippet f "for loop" b
+for ${1:i} in ${2:something}; do
+    ${3:something}
+done
+endsnippet
