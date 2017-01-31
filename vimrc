@@ -151,20 +151,40 @@ augroup EnableSyntaxHighlighting
                 \ endif
 augroup END
 
-fun! LoadSettings()
-    let vimsettings = '~/.vim/settings'
-    for fpath in split(globpath(vimsettings, '*.vim'), '\n')
-        exe 'source' fpath
-    endfor
-endfun
-
-call LoadSettings()
-
 let g:UltiSnipsEditSplit='horizontal'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay=50
 let g:deoplete#sources#clang#libclang_path = $LIBCLANG_PATH
 let g:deoplete#sources#clang#clang_header = $LIBCLANG_HEADER
+
+fu! s:DeniteInit()
+    call denite#custom#source(
+        \ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+    call denite#custom#var('file_rec', 'command',
+        \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+    call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+endfu
+
+nnoremap <C-p> :Denite file_rec<CR>
+
+augroup DeniteInit
+    au!
+    au VimEnter * call s:DeniteInit()
+augroup END
+
+setlocal ts=4 sts=4 sw=4 expandtab
+
+augroup indent
+    au!
+    au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+    au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType html setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType json setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType css setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType vim setlocal ts=4 sts=4 sw=4 expandtab
+augroup END
 
 fun! MaximizeOrEqualize()
     if &columns < 170
