@@ -1,5 +1,4 @@
 let g:python_highlight_all = 1
-setlocal makeprg=pytest\ --tb=short\ -q
 
 let delimitMate_smart_quotes = '\%([^[:punct:][:space:]fubr]\|\%(\\\\\)*\\\)\%#\|\%#\%([^[:space:][:punct:]fubr]\)'
 let b:delimitMate_nesting_quotes = ['"', "'"]
@@ -26,6 +25,10 @@ endfunction
 
 let b:switch_custom_definitions =
     \ [
+    \   {
+    \     '\v<not ([a-z][a-zA-Z0-9_]*)': '\1',
+    \     '\v<([a-z][a-zA-Z0-9_]*)>': 'not \1',
+    \   },
     \   {
     \     '\v\.(\w+)': '[''\1'']',
     \     '\v\[''([^'']+)''\]': '.\1',
