@@ -10,12 +10,22 @@ case $comm in
     *)
         force_color=""
 esac
+local previous_out_hash=''
+test -e /tmp/out && previous_out_hash=$(md5sum /tmp/out | cut -d' ' -f 1)
 $comm $force_color $@ | tee /tmp/out
 if [[ $? -eq 0 ]]; then
-    sleep 1
+    if [[ $previous_out_hash == $(md5sum /tmp/out | cut -d' ' -f 1) ]]; then
+        if [[ $(uname) == 'Darwin' ]]; then
+            say 'all test passed'
+        else
+            notify-send 'all test passed'
+        fi
+    else
+        sleep 1
+    fi
     tmux select-pane -t.0 \; resize-pane -Z
 else
-    line_count=$(wc -l /tmp/out | awk '{print $1}')
+    line_count=$(wc -l /tmp/out | cut -d' ' -f 1)
     if [[ $line_count -gt $LINES ]]; then
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
         if [[ $? -eq 1 ]]; then
