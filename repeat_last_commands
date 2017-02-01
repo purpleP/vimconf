@@ -1,8 +1,5 @@
 #! /usr/bin/env zsh
 
-local last_pane=0
 for i in $(< /tmp/marked_panes); do
     tmux send -t.$i up Enter;
-    last_pane=$i
 done
-tmux select-pane -t.$last_pane

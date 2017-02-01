@@ -21,10 +21,12 @@ if [[ $? -eq 0 ]]; then
             notify-send 'all test passed'
         fi
     else
+        tmux select-pane -t.$TMUX_PANE
         sleep 1
+        tmux select-pane -t.0 \; resize-pane -Z
     fi
-    tmux select-pane -t.0 \; resize-pane -Z
 else
+    tmux select-pane -t.$TMUX_PANE
     line_count=$(wc -l /tmp/out | cut -d' ' -f 1)
     if [[ $line_count -gt $LINES ]]; then
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
