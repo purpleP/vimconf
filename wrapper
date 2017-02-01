@@ -11,14 +11,14 @@ case $comm in
         force_color=""
 esac
 local previous_out_hash=''
-test -e /tmp/out && previous_out_hash=$(md5sum /tmp/out | cut -d' ' -f 1)
+test -e /tmp/out && previous_out_hash=$(md5 /tmp/out | awk '{print $1}')
 $comm $force_color $@ | tee /tmp/out
 if [[ $? -eq 0 ]]; then
-    if [[ $previous_out_hash == $(md5sum /tmp/out | cut -d' ' -f 1) ]]; then
+    if [[ $previous_out_hash == $(md5 /tmp/out | awk '{print $1}') ]]; then
         if [[ $(uname) == 'Darwin' ]]; then
-            say 'all test passed'
+            osascript -e 'display notification "all tests passed"'
         else
-            notify-send 'all test passed'
+            notify-send 'all tests passed'
         fi
     else
         tmux select-pane -t.$TMUX_PANE
@@ -27,7 +27,8 @@ if [[ $? -eq 0 ]]; then
     fi
 else
     tmux select-pane -t.$TMUX_PANE
-    line_count=$(wc -l /tmp/out | cut -d' ' -f 1)
+    line_count=$(wc -l /tmp/out | awk '{print $1}')
+    echo $line_count > /tmp/lalal
     if [[ $line_count -gt $LINES ]]; then
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
         if [[ $? -eq 1 ]]; then

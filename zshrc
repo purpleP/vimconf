@@ -127,11 +127,13 @@ if [[ $platform == 'Darwin' ]]; then
             integer luminance
             echo $luminance
     }
+    alias md5='md5 -r'
 else
     export LIBCLANG_PATH=/usr/lib/llvm-3.9/lib/libclang.so
     export LIBCLANG_HEADER=/usr/lib/llvm-3.9/lib/clang/3.9.0/include
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'
+    alias md5='md5sum'
 
     bg_luminance() {
         local profile_id=$(dconf list /org/gnome/terminal/legacy/profiles:/ | head -1)
