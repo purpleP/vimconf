@@ -12,6 +12,7 @@ case $comm in
 esac
 local previous_out_hash=''
 test -e /tmp/out && previous_out_hash=$(md5 /tmp/out | awk '{print $1}')
+sleep 0.01
 $comm $force_color $@ | tee /tmp/out
 if [[ $? -eq 0 ]]; then
     if [[ $previous_out_hash == $(md5 /tmp/out | awk '{print $1}') ]]; then
@@ -21,12 +22,10 @@ if [[ $? -eq 0 ]]; then
             notify-send 'all tests passed'
         fi
     else
-        tmux select-pane -t.$TMUX_PANE
         sleep 1
-        tmux select-pane -t.0 \; resize-pane -Z
     fi
+    tmux select-pane -t.0 \; resize-pane -Z
 else
-    tmux select-pane -t.$TMUX_PANE
     line_count=$(wc -l /tmp/out | awk '{print $1}')
     if [[ $line_count -gt $LINES ]]; then
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
@@ -34,6 +33,6 @@ else
             less +G /tmp/out
         fi
     fi
-    tmux select-pane -t.0
+    tmux select-pane -t.0 \; resize-pane -Z
 fi
 unsetopt pipefail

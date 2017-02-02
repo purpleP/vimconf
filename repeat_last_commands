@@ -1,5 +1,6 @@
 #! /usr/bin/env zsh
 
 for i in $(< /tmp/marked_panes); do
+    tmux select-pane -t.$i
     tmux send -t.$i up Enter;
 done
