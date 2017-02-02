@@ -28,7 +28,6 @@ if [[ $? -eq 0 ]]; then
 else
     tmux select-pane -t.$TMUX_PANE
     line_count=$(wc -l /tmp/out | awk '{print $1}')
-    echo $line_count > /tmp/lalal
     if [[ $line_count -gt $LINES ]]; then
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
         if [[ $? -eq 1 ]]; then
