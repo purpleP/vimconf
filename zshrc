@@ -52,7 +52,9 @@ alias ipy='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias q='exit'
+alias t='tmux'
 alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
+alias nvim='vim --cmd "set bg=$(dark_or_light)"'
 
 PROMPT='%F{blue}%T%f %F{yellow}%c%f %# '
 
