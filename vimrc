@@ -85,8 +85,8 @@ endif
 
 augroup myvimrc
     au!
-    au BufWritePost .vimrc call UpdateVimrc()
-    au BufWritePost vimrc call UpdateVimrc()
+    au BufWritePost .vimrc source $MYVIMRC
+    au BufWritePost vimrc source $MYVIMRC
     au BufEnter .vimrc set ft=vim
 augroup END
 
@@ -165,6 +165,14 @@ fu! s:DeniteInit()
     call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
     call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 endfu
+
+augroup SmartNumbers
+    au!
+    au BufEnter,WinEnter * set number | set relativenumber
+    au BufLeave,WinLeave * set norelativenumber
+    au FocusLost * set norelativenumber
+    au FocusGained * set relativenumber
+augroup END
 
 nnoremap <C-p> :Denite file_rec<CR>
 
