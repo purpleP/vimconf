@@ -189,3 +189,4 @@ unalias gcl
 gcl() {
     git clone $1 && cd $(echo "$1" | perl -pe 's/.*?(\w+)\.git/\1/g')
 }
+cd .
