@@ -3,3 +3,4 @@ setlocal shiftwidth=4
 setlocal expandtab
 
 packadd ultisnips
+packadd ale
