@@ -28,8 +28,10 @@ endfunction
 let b:switch_custom_definitions =
     \ [
     \   {
-    \     '\v<not ([a-z][a-zA-Z0-9_]*)': '\1',
-    \     '\v<([a-z][a-zA-Z0-9_]*)>': 'not \1',
+    \     '\v(^\s*)(<[a-z][a-zA-Z0-9_]* \=)': '\1return',
+    \   },
+    \   {
+    \     '\v(if|elif) ([a-z][a-zA-Z0-9_]*)': '\1 not \2',
     \   },
     \   {
     \     '\v\.(\w+)': '[''\1'']',
