@@ -181,8 +181,6 @@ augroup DeniteInit
     au VimEnter * call s:DeniteInit()
 augroup END
 
-setlocal ts=4 sts=4 sw=4 expandtab
-
 augroup indent
     au!
     au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
@@ -191,7 +189,6 @@ augroup indent
     au FileType json setlocal ts=2 sts=2 sw=2 expandtab
     au FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
     au FileType css setlocal ts=2 sts=2 sw=2 expandtab
-    au FileType vim setlocal ts=4 sts=4 sw=4 expandtab
 augroup END
 
 fun! MaximizeOrEqualize()
