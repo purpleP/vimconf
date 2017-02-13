@@ -73,16 +73,6 @@ augroup END
 
 cmap w!! w !sudo tee % >/dev/null
 
-if !exists('*UpdateVimrc')
-    fu! UpdateVimrc()
-        call LoadSettings()
-        let g:buf=bufnr('')
-        silent! execute 'bufdo source ' . $MYVIMRC
-        silent! execute 'b ' . string(g:buf)
-        syntax on
-    endfu
-endif
-
 augroup myvimrc
     au!
     au BufWritePost .vimrc source $MYVIMRC
