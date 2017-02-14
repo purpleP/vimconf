@@ -1,0 +1,3 @@
+#! /usr/bin/env zsh
+
+! grep -H -n --color pdb $(git diff --cached --name-only)
