@@ -47,14 +47,15 @@ DEFAULT_USER=$(whoami)
 plugins ()
 # User configuration
 
-alias py=python3
 alias ipy='ipython --TerminalInteractiveShell.editing_mode=vi'
-alias vrc='nvim ~/.vimrc'
-alias zrc='nvim ~/.zshrc'
+alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
+alias py=python3
 alias q='exit'
 alias t='tmux'
-alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
+alias v='nvim'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
+alias vrc='nvim ~/.vimrc'
+alias zrc='nvim ~/.zshrc'
 
 PROMPT='%F{blue}%T%f %F{yellow}%c%f %# '
 
