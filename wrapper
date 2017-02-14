@@ -36,8 +36,8 @@ else
         grep -q -e '(Pdb\(++\)\?)' /tmp/out
         if [[ $? -eq 1 ]]; then
             less +G /tmp/out
+            tmux select-pane -t.0 \; resize-pane -Z
         fi
     fi
-    tmux select-pane -t.0 \; resize-pane -Z
 fi
 unsetopt pipefail
