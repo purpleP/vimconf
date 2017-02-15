@@ -6,12 +6,13 @@ else
     alias md5=md5sum
 fi
 
+local dir=$1
 local pane=$2
 local last_status=0
 shift
 shift
 
-inotifywait -m -r -e close_write $1 |
+inotifywait -m -r -e close_write $dir |
 while read -r directory events filename; do
     setopt pipefail
     if [[ $filename =~ '.*\.py$' ]]; then
@@ -21,46 +22,30 @@ while read -r directory events filename; do
         test -e /tmp/auto_test && previous_out_hash=$(md5 /tmp/auto_test | awk '{print $1}')
         $@ $(find $directory -regex $regex) | tee /tmp/auto_test
         local current_status=$?
-        if [[ last_status == current_status ]]; then
-            if [[ $previous_out_hash == $(md5 /tmp/auto_test | awk '{print $1}') ]]; then
-                [[ $current_status -eq 0 ]] && local $passed_or_failed='passed' || local $passed_or_failed='failed'
-                if [[ $(uname) == 'Darwin' ]]; then
-                    osascript -e "display notification 'all tests $passed_or_failed'"
-                else
-                    notify-send "all tests $passed_or_failed"
-                fi
+        local current_hash=$(md5 /tmp/auto_test | awk '{print $1}')
+        if [[ last_status -eq current_status && $previous_out_hash == $current_hash ]]; then
+            [[ $current_status -eq 0 ]] && local passed_or_failed='passed' || local passed_or_failed='failed'
+            if [[ $(uname) == 'Darwin' ]]; then
+                osascript -e "display notification 'all tests $passed_or_failed'"
             else
-                tmux select-pane -t.$pane
-                if [[ $current_status -eq 0 ]]; then
-                    sleep 0.5
-                    tmux select-pane -t.0 \; resize-pane -Z
-                else
-                    line_count=$(wc -l /tmp/auto_test | awk '{print $1}')
-                    if [[ $line_count -gt $LINES ]]; then
-                        grep -q -e '(Pdb\(++\)\?)' /tmp/auto_test
-                        if [[ $? -eq 1 ]]; then
-                            less +G /tmp/auto_test
-                            tmux select-pane -t.0 \; resize-pane -Z
-                        fi
+                notify-send "all tests $passed_or_failed"
+            fi
+        else
+            last_status=$current_status
+            tmux select-pane -t.$pane
+            if [[ $current_status -eq 0 ]]; then
+                sleep 0.5
+                tmux select-pane -t.0 \; resize-pane -Z
+            else
+                line_count=$(wc -l /tmp/auto_test | awk '{print $1}')
+                if [[ $line_count -gt $LINES ]]; then
+                    grep -q -e '(Pdb\(++\)\?)' /tmp/auto_test
+                    if [[ $? -eq 1 ]]; then
+                        less +G /tmp/auto_test
+                        tmux select-pane -t.0 \; resize-pane -Z
                     fi
                 fi
             fi
-        fi
-        if [[ $previous_out_hash == $(md5 /tmp/auto_test | awk '{print $1}') ]]; then
-        if [[ $? -eq 0 ]]; then
-                print "hash is the same"
-                if [[ $(uname) == 'Darwin' ]]; then
-                    osascript -e 'display notification "all tests passed"'
-                else
-                    notify-send 'all tests passed'
-                fi
-            else
-                tmux select-pane -t.$pane
-                sleep 0.5
-                tmux select-pane -t.0 \; resize-pane -Z
-            fi
-        else
-            tmux select-pane -t.$pane
         fi
     fi
 done
