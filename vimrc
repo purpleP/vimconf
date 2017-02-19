@@ -232,8 +232,7 @@ fu! HlSearch()
     endif
     if new_search || s:prev_search_disabled == 0
         if v:hlsearch
-            let pos = match(getline('.'), last_search_pattern, col('.') - 1) + 1
-            if pos != col('.')
+            silent! if v:hlsearch && !search('\%#\zs'.@/,'cnW')
                 call StopHL()
             endif
         endif
