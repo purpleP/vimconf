@@ -151,11 +151,7 @@ else
 fi
 
 dark_or_light() {
-    if [[ $(bg_luminance) -ge 50 ]];then
-        echo 'light';
-    else
-        echo 'dark';
-    fi
+    [[ $(bg_luminance) -ge 50 ]] && echo 'light' || echo 'dark'
 }
 
 setopt autopushd pushdminus pushdsilent pushdtohome
