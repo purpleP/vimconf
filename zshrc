@@ -90,11 +90,7 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-else
-    export EDITOR='nvim'
-fi
+[[ -n $SSH_CONNECTION ]] && export EDITOR='vim' || export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
