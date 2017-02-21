@@ -47,13 +47,13 @@ DEFAULT_USER=$(whoami)
 plugins ()
 # User configuration
 
-alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
 alias ipy='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias py=python3
 alias q='exit'
 alias t='tmux'
-alias v='nvim'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
+alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
+alias v='nvim'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 
@@ -90,11 +90,7 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-else
-    export EDITOR='nvim'
-fi
+[[ -n $SSH_CONNECTION ]] && export EDITOR='vim' || export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -151,11 +147,7 @@ else
 fi
 
 dark_or_light() {
-    if [[ $(bg_luminance) -ge 50 ]];then
-        echo 'light';
-    else
-        echo 'dark';
-    fi
+    [[ $(bg_luminance) -ge 50 ]] && echo 'light' || echo 'dark'
 }
 
 setopt autopushd pushdminus pushdsilent pushdtohome
