@@ -147,16 +147,22 @@ let g:deoplete#auto_complete_delay=50
 let g:deoplete#sources#clang#libclang_path = $LIBCLANG_PATH
 let g:deoplete#sources#clang#clang_header = $LIBCLANG_HEADER
 
+let g:in_git_repo = 0
+
 fu! s:DeniteInit()
     call denite#custom#source(
         \ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-    call denite#custom#var('file_rec', 'command',
-        \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    if g:in_git_repo
+        call denite#custom#var('file_rec', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
+    else
+        call denite#custom#var('file_rec', 'command',
+            \ ['find', '-L', ':directory', '-type', 'l', '-o', '-type', 'f'])
+    endif
     call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
     call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 endfu
 
-nnoremap <C-p> :Denite file_rec<CR>
+nnoremap <silent> <C-p> :Denite file_rec<CR>
 
 augroup SmartNumbers
     au!
@@ -260,4 +266,9 @@ augroup AutoWrite
     au TabLeave * silent! wall
     au FocusLost * silent! wall
     au FocusGained * checktime
+augroup END
+
+augroup git
+    au!
+    au User Fugitive let g:in_git_repo = 1
 augroup END
