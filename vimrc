@@ -22,7 +22,7 @@ set smartcase
 set splitbelow
 set splitright
 set virtualedit=insert
-set wildignore+=*.so,*.swp,*.zip,.*/**
+set wildignore+=*.pyc,*.so,*.swp,*.zip,.*/**
 set wildmenu
 
 if !has('nvim')
