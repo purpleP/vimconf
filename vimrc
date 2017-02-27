@@ -10,6 +10,7 @@ set completeopt=menuone,preview
 set confirm
 set foldlevel=99
 set foldmethod=indent
+set ignorecase
 set lazyredraw
 set mouse-=a
 set number
@@ -41,15 +42,6 @@ endif
 
 if has('nvim')
     set inccommand=nosplit
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap <C-W><C-H> <C-\><C-N><C-W><C-H>
-    tnoremap <C-W><C-J> <C-\><C-N><C-W><C-J>
-    tnoremap <C-W><C-K> <C-\><C-N><C-W><C-K>
-    tnoremap <C-W><C-L> <C-\><C-N><C-W><C-L>
-    augroup Terminal
-        au!
-        autocmd BufWinEnter,WinEnter term://* startinsert
-    augroup END
 endif
 
 syntax enable

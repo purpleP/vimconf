@@ -70,14 +70,9 @@ if ! zgen saved; then
     echo "Creating a zgen save"
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/dirhistory
-    zgen oh-my-zsh plugins/cabal
-    zgen oh-my-zsh plugins/python
     zgen oh-my-zsh plugins/pip
     zgen oh-my-zsh plugins/vi-mode
-    zgen oh-my-zsh plugins/taskwarrior
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
     zgen load purpleP/autovenv
@@ -87,7 +82,6 @@ fi
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 
 # Preferred editor for local and remote sessions
 [[ -n $SSH_CONNECTION ]] && export EDITOR='vim' || export EDITOR='nvim'
@@ -158,6 +152,7 @@ bindkey -v
 vi-append-x-selection () { RBUFFER=$(pbpaste </dev/null)$RBUFFER; }
 zle -N vi-append-x-selection
 bindkey -M vicmd 'p' vi-append-x-selection
+bindkey -M vicmd '?' history-incremental-search-backward
 
 uncommited() {
     find ~/code ~/vimconf ~/configs ~/.vim/plugged -type d -exec test -e '{}/.git' \; -print -prune 2>/dev/null | \
@@ -179,4 +174,5 @@ unalias gcl
 gcl() {
     git clone $1 && cd $(echo "$1" | perl -pe 's/.*?(\w+)\.git/\1/g')
 }
+. ~/.nix-profile/etc/profile.d/nix.sh
 cd .
