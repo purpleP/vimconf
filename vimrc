@@ -262,5 +262,5 @@ augroup END
 
 augroup git
     au!
-    au User Fugitive let g:in_git_repo = 1
+    au User Fugitive let g:in_git_repo = 1 | call s:DeniteInit()
 augroup END
