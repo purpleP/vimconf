@@ -146,9 +146,6 @@ fu! s:DeniteInit()
         \ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
     if g:in_git_repo
         call denite#custom#var('file_rec', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
-    else
-        call denite#custom#var('file_rec', 'command',
-            \ ['find', '-L', ':directory', '-type', 'l', '-o', '-type', 'f'])
     endif
     call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
     call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
