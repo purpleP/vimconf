@@ -47,8 +47,8 @@ DEFAULT_USER=$(whoami)
 plugins ()
 # User configuration
 
-alias ipy='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias py=python3
+alias ipy=ipython
 alias q='exit'
 alias t='tmux'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'

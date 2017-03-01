@@ -71,3 +71,4 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {
     Token.OutPromptNum: '%s bold' % RED
 }
 c.TerminalInteractiveShell.true_color = True
+c.TerminalInteractiveShell.editing_mode = 'vi'
