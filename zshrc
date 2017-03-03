@@ -115,9 +115,9 @@ if [[ $platform == 'Darwin' ]]; then
         local coefficients=(0.2126 0.7152 0.0722)
         local luminance=0
         for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
-            luminance=$(( luminance / 65535 * 100 ))
-            integer luminance
-            echo $luminance
+        luminance=$(( luminance / 65535 * 100 ))
+        integer luminance
+        echo $luminance
     }
 else
     export LIBCLANG_PATH=/usr/lib/llvm-3.9/lib/libclang.so
@@ -126,16 +126,18 @@ else
     alias pbpaste='xclip -selection clipboard -o'
 
     bg_luminance() {
-        local profile_id=$(dconf list /org/gnome/terminal/legacy/profiles:/ | head -1)
-        local color=$(dconf read "/org/gnome/terminal/legacy/profiles:/$profile_id"background-color)
+        local regex="s/rgb:\([^/]\+\)\/\([^/]\+\)\/\([^/]\+\)/\1 \2 \3/p"
+        local colors=( $(xtermcontrol --get-bg | sed -n $regex) )
+        typeset -a base10_colors
+        for hex in "${colors[@]}"; do
+            base10_colors+=( $((16#$hex)) )
+        done
         local luminance=0
         local coefficients=(0.2126 0.7152 0.0722)
-        local regex="s/'rgb(\([0-9]\+\),\([0-9]\+\),\([0-9]\+\).*/\1 \2 \3/p"
-        local colors=($(echo $color | sed -n $regex))
-        for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
-            luminance=$(( luminance / 255 * 100 ))
-            integer luminance
-            echo $luminance
+        for i (1 2 3) (( luminance+= coefficients[i] * base10_colors[i] ))
+        luminance=$(( luminance / 65535 * 100 ))
+        integer luminance
+        echo $luminance
     }
 
 fi

@@ -165,6 +165,7 @@ augroup DeniteInit
     au VimEnter * call s:DeniteInit()
 augroup END
 
+set ts=4 sts=4 sw=4 expandtab
 augroup indent
     au!
     au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
