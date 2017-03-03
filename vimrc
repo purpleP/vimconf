@@ -5,7 +5,6 @@ filetype plugin indent on    " required
 set autowrite
 set breakindent
 set backspace=indent,eol,start
-set clipboard=unnamed
 set completeopt=menuone,preview
 set confirm
 set foldlevel=99
