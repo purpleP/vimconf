@@ -8,7 +8,7 @@ davidhalter/jedi-vim opt
 eagletmt/neco-ghc opt
 easymotion/vim-easymotion start
 ervandew/supertab start
-hynek/vim-python-pep8-indent opt
+Vimjas/vim-python-pep8-indent opt
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim opt
