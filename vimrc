@@ -53,14 +53,7 @@ let delimitMate_expand_cr = 1
 let mapleader = "\<Space>"
 imap <C-l> <right>
 nnoremap <silent> <TAB> :noh<CR>
-map <CR> <Plug>(easymotion-prefix)
 nnoremap <silent> <leader>* :let @/='\<'.expand('<cword>').'\>' <bar> set hlsearch<CR>
-
-augroup EnterMap
-    au!
-    au CmdwinEnter * noremap <buffer> <CR> <CR>
-    au Filetype qf noremap <buffer> <CR> <CR>
-augroup END
 
 cmap w!! w !sudo tee % >/dev/null
 
