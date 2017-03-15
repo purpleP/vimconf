@@ -9,7 +9,6 @@ set completeopt=menuone,preview
 set confirm
 set foldlevel=99
 set foldmethod=indent
-set ignorecase
 set lazyredraw
 set mouse-=a
 set number
@@ -54,6 +53,12 @@ let mapleader = "\<Space>"
 imap <C-l> <right>
 nnoremap <silent> <TAB> :noh<CR>
 nnoremap <silent> <leader>* :let @/='\<'.expand('<cword>').'\>' <bar> set hlsearch<CR>
+
+augroup EnterMap
+    au!
+    au CmdwinEnter * noremap <buffer> <CR> <CR>
+    au Filetype qf noremap <buffer> <CR> <CR>
+augroup END
 
 cmap w!! w !sudo tee % >/dev/null
 

@@ -52,8 +52,10 @@ Return a list of installed packages or nil for every skipped package."
  '(font-lock-keyword-face ((t (:foreground "#859900" :weight normal))))
  '(font-lock-variable-name-face ((t (:foreground "#839496"))))
  )
-(set-face-attribute 'linum nil :background "#073642")
-(set-face-attribute 'fringe nil :background "#073642")
+(defun set-line-numbers-background ()
+    (set-face-background 'linum "#073642")
+    (set-face-background 'fringe "#073642")
+)
 ;;; esc quits
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -90,5 +92,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq nlinum-relative-current-symbol "")
 (setq nlinum-relative-offset 0)
 (global-nlinum-relative-mode t)
+(add-hook 'nlinum-mode-hook 'set-line-numbers-background)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
