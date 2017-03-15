@@ -1,10 +1,6 @@
 #! /usr/bin/env zsh
 
-if [[ $(uname) == 'Darwin' ]]; then
-    alias md5='md5 -r'
-else
-    alias md5=md5sum
-fi
+[[ $(uname) == 'Darwin' ]] && alias md5='md5 -r' || alias md5=md5sum
 
 local dir=$1
 local pane=$2
