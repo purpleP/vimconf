@@ -25,7 +25,7 @@ Return a list of installed packages or nil for every skipped package."
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(ensure-package-installed 'evil 'solarized-theme 'nlinum-relative)
+(ensure-package-installed 'evil 'solarized-theme 'nlinum-relative 'ag 'wgrep)
 (evil-mode t)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -40,13 +40,17 @@ Return a list of installed packages or nil for every skipped package."
  '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(evil-search-module (quote evil-search))
+ '(package-selected-packages (quote (wgrep ag nlinum-relative solarized-theme evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-constant-face ((t (:foreground "#2aa198" :weight normal))))
+ '(font-lock-keyword-face ((t (:foreground "#859900" :weight normal))))
+ '(font-lock-variable-name-face ((t (:foreground "#839496")))))
 ;;; esc quits
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -69,6 +73,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (switch-to-buffer "**")
 (setq linum-relative-current-symbol "")
 (require 'nlinum-relative)
+(require 'wgrep)
+(require 'ag)
 (nlinum-relative-setup-evil)
 (nlinum-relative-mode t)
 (setq nlinum-relative-redisplay-delay 0)
