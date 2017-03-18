@@ -148,7 +148,8 @@ fu! s:DeniteInit()
     call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 endfu
 
-nnoremap <silent> <C-p> :Denite file_rec<CR>
+nnoremap <silent> <Esc>f :Denite file_rec<CR>
+nnoremap <silent> <Esc>b :Denite buffer<CR>
 
 augroup SmartNumbers
     au!
