@@ -37,6 +37,7 @@ Return a list of installed packages or nil for every skipped package."
   'helm
   'projectile
   'sentence-navigation
+  'helm-projectile
 )
 (evil-mode t)
 
@@ -82,7 +83,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
     (abort-recursive-edit)))
 (global-unset-key (kbd "C-h"))
-(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(let
+  ((escape-keymap (make-sparse-keymap)))
+  (define-key escape-keymap "f" 'helm-projectile)
+  (define-key escape-keymap "b" 'helm-buffers-list)
+  (define-key evil-normal-state-map [escape] escape-keymap)
+)
+; (define-key evil-normal-state-map [escape] 'keyboard-quit)
 (define-key evil-visual-state-map [escape] 'keyboard-quit)
 (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
@@ -101,7 +108,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (switch-to-buffer "**")
 (setq linum-relative-current-symbol "")
 (require 'nlinum-relative)
-(require 'wgrep)
 (nlinum-relative-setup-evil)
 (nlinum-relative-mode t)
 (setq nlinum-relative-redisplay-delay 0)
