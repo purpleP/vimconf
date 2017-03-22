@@ -40,6 +40,7 @@ Return a list of installed packages or nil for every skipped package."
   'projectile
   'sentence-navigation
   'helm-projectile
+  'flycheck
 )
 (evil-mode t)
 
@@ -160,3 +161,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-inner-text-objects-map "s" 'sentence-nav-evil-inner-sentence)
 (evil-indent-plus-default-bindings)
 (evil-commentary-mode)
+(global-flycheck-mode)
