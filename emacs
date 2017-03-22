@@ -30,8 +30,6 @@ Return a list of installed packages or nil for every skipped package."
   'evil-numbers
   'solarized-theme
   'nlinum-relative
-  'ag
-  'wgrep
   'auto-complete
   'ac-haskell-process
   'jedi
