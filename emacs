@@ -27,6 +27,8 @@ Return a list of installed packages or nil for every skipped package."
 
 (ensure-package-installed
   'evil
+  'evil-indent-plus
+  'evil-commentary
   'evil-numbers
   'solarized-theme
   'nlinum-relative
@@ -54,7 +56,7 @@ Return a list of installed packages or nil for every skipped package."
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (sentence-navigation evil-numbers wgrep ag nlinum-relative solarized-theme evil)))
+    (evil-commentary evil-commentary-mode sentence-navigation evil-numbers wgrep ag nlinum-relative solarized-theme evil)))
  '(python-shell-virtualenv-root "~/.venv/"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -156,3 +158,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-motion-state-map "g(" 'sentence-nav-evil-backward-end)
 (define-key evil-outer-text-objects-map "s" 'sentence-nav-evil-a-sentence)
 (define-key evil-inner-text-objects-map "s" 'sentence-nav-evil-inner-sentence)
+(evil-indent-plus-default-bindings)
+(evil-commentary-mode)
