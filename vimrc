@@ -144,8 +144,6 @@ fu! s:DeniteInit()
     if g:in_git_repo
         call denite#custom#var('file_rec', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
     endif
-    call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-    call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 endfu
 
 nnoremap <silent> <Esc>f :Denite file_rec<CR>
