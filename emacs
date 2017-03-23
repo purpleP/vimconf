@@ -167,3 +167,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-indent-plus-default-bindings)
 (evil-commentary-mode)
 (global-flycheck-mode)
+
+(defun end-of-buffer-dwim (&rest args)
+  (when (looking-at-p "^$")
+    (previous-line))
+  (beginning-of-line))
+(advice-add 'end-of-buffer :after 'end-of-buffer-dwim)
