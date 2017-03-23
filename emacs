@@ -30,8 +30,11 @@ Return a list of installed packages or nil for every skipped package."
   'ac-haskell-process
   'auto-complete
   'evil
+  'evil-indent-plus
+  'evil-commentary
   'evil-numbers
   'evil-vimish-fold
+  'flycheck
   'fuzzy
   'helm
   'helm-projectile
@@ -161,3 +164,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (set-face-attribute 'default nil :height 120)
 (setq vc-follow-symlinks nil)
 (setq helm-case-fold-search 'smart)
+(evil-indent-plus-default-bindings)
+(evil-commentary-mode)
+(global-flycheck-mode)
