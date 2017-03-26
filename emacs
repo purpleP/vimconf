@@ -32,6 +32,7 @@ Return a list of installed packages or nil for every skipped package."
   'evil-indent-plus
   'evil-commentary
   'evil-numbers
+  'evil-surround
   'evil-vimish-fold
   'flycheck
   'fuzzy
@@ -58,7 +59,7 @@ Return a list of installed packages or nil for every skipped package."
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
+    (evil-surround company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
  '(python-shell-virtualenv-root "~/.venv/"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -177,3 +178,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (modify-syntax-entry ?- "w")))
+(define-key isearch-mode-map (kbd "C-g") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-t") 'isearch-repeat-backward)
+(global-evil-surround-mode t)
