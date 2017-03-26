@@ -71,7 +71,8 @@ Return a list of installed packages or nil for every skipped package."
  '(font-lock-keyword-face ((t (:foreground "#859900" :weight normal))))
  '(font-lock-variable-name-face ((t (:foreground "#839496"))))
  '(isearch ((t (:background "#cb4b16" :foreground "#002b36" :weight normal))))
- '(nlinum-relative-current-face ((t (:inherit linum :background "#002b36" :foreground "#586e75" :weight bold)))))
+ '(nlinum-relative-current-face ((t (:inherit linum :background "#002b36" :foreground "#586e75" :weight bold))))
+ '(show-paren-match ((t (:background "#586e75" :foreground "#dc322f" :weight normal)))))
 
 (defun set-line-numbers-background ()
     (set-face-background 'linum "#073642")
@@ -181,3 +182,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key isearch-mode-map (kbd "C-g") 'isearch-repeat-forward)
 (define-key isearch-mode-map (kbd "C-t") 'isearch-repeat-backward)
 (global-evil-surround-mode t)
+(show-paren-mode t)
