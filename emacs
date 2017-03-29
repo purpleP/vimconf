@@ -26,7 +26,6 @@ Return a list of installed packages or nil for every skipped package."
 (package-initialize)
 
 (ensure-package-installed
-  'autopair
   'ac-haskell-process
   'auto-complete
   'evil
@@ -34,6 +33,7 @@ Return a list of installed packages or nil for every skipped package."
   'evil-commentary
   'evil-numbers
   'evil-exchange
+  'evil-surround
   'evil-vimish-fold
   'flycheck
   'fuzzy
@@ -60,7 +60,7 @@ Return a list of installed packages or nil for every skipped package."
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
+    (evil-surround company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
  '(python-shell-virtualenv-root "~/.venv/"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -71,12 +71,15 @@ Return a list of installed packages or nil for every skipped package."
  '(font-lock-constant-face ((t (:foreground "#2aa198" :weight normal))))
  '(font-lock-keyword-face ((t (:foreground "#859900" :weight normal))))
  '(font-lock-variable-name-face ((t (:foreground "#839496"))))
- '(nlinum-relative-current-face ((t (:inherit linum :background "#002b36" :foreground "#586e75" :weight bold)))))
+ '(isearch ((t (:background "#cb4b16" :foreground "#002b36" :weight normal))))
+ '(nlinum-relative-current-face ((t (:inherit linum :background "#002b36" :foreground "#586e75" :weight bold))))
+ '(show-paren-match ((t (:background "#586e75" :foreground "#dc322f" :weight normal)))))
 
 (defun set-line-numbers-background ()
     (set-face-background 'linum "#073642")
     (set-face-background 'fringe "#073642")
 )
+(electric-pair-mode)
 
 ;;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -140,7 +143,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq python-environment-default-root-name "~/.venv/")
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-(autopair-global-mode)
 (with-eval-after-load
   'evil (defalias #'forward-evil-word #'forward-evil-symbol)
 )
@@ -168,3 +170,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-indent-plus-default-bindings)
 (evil-commentary-mode)
 (global-flycheck-mode)
+
+(defun end-of-buffer-dwim (&rest args)
+  (when (looking-at-p "^$")
+    (previous-line))
+  (beginning-of-line))
+(advice-add 'end-of-buffer :after 'end-of-buffer-dwim)
+(add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+(add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+(add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+(add-hook 'emacs-lisp-mode-hook #'(lambda () (modify-syntax-entry ?- "w")))
+(define-key isearch-mode-map (kbd "C-g") 'isearch-repeat-forward)
+(define-key isearch-mode-map (kbd "C-t") 'isearch-repeat-backward)
+(global-evil-surround-mode t)
+(show-paren-mode t)
