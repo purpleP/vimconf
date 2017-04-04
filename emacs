@@ -32,6 +32,7 @@ Return a list of installed packages or nil for every skipped package."
   'evil-indent-plus
   'evil-commentary
   'evil-numbers
+  'evil-exchange
   'evil-surround
   'evil-vimish-fold
   'flycheck
