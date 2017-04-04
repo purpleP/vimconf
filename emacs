@@ -39,6 +39,8 @@ Return a list of installed packages or nil for every skipped package."
   'helm
   'helm-projectile
   'jedi
+  'json-mode
+  'lua-mode
   'nlinum-relative
   'projectile
   'sentence-navigation
@@ -59,7 +61,7 @@ Return a list of installed packages or nil for every skipped package."
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (evil-surround company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
+    (json-mode flymake-lua lua-mode haskell-emacs flycheck-haskell evil-surround company-mode fuzzy evil-vimish-fold sentence-navigation evil-numbers nlinum-relative solarized-theme evil)))
  '(python-shell-virtualenv-root "~/.venv/"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -183,3 +185,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key isearch-mode-map (kbd "C-t") 'isearch-repeat-backward)
 (global-evil-surround-mode t)
 (show-paren-mode t)
+(declare-function python-shell-calculate-exec-path "python")
+
+(defun flycheck-virtualenv-executable-find (executable)
+  "Find an EXECUTABLE in the current virtualenv if any."
+  (if (bound-and-true-p python-shell-virtualenv-root)
+      (let ((exec-path (python-shell-calculate-exec-path)))
+        (executable-find executable))
+    (executable-find executable)))
+
+(defun flycheck-virtualenv-setup ()
+  "Setup Flycheck for the current virtualenv."
+  (setq-local flycheck-executable-find #'flycheck-virtualenv-executable-find))
+(add-hook 'python-mode-hook #'flycheck-virtualenv-setup)
+(projectile-mode)
+(helm-projectile-on)
