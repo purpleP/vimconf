@@ -1,5 +1,5 @@
-*v*env
 *.log
+*.so
 *.db
 .idea
 .DS_Store
