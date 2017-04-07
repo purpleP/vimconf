@@ -149,12 +149,21 @@ dark_or_light() {
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt histignorespace extended_glob
 
+fzy-history-widget () {
+	local selected num
+	selected=$(history | awk '{$1="";print}' | sort | uniq | fzy -l $LINES)
+    zle -U $selected
+	zle redisplay
+}
+zle -N fzy-history-widget
+
 export KEYTIMEOUT=1
 bindkey -v
 vi-append-x-selection () { RBUFFER=$(pbpaste </dev/null)$RBUFFER; }
 zle -N vi-append-x-selection
+bindkey '^R' fzy-history-widget
 bindkey -M vicmd 'p' vi-append-x-selection
-bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '?' fzy-history-widget
 
 uncommited() {
     find ~/code ~/vimconf ~/configs ~/.vim/plugged -type d -exec test -e '{}/.git' \; -print -prune 2>/dev/null | \
@@ -174,7 +183,8 @@ alias unm="rm /tmp/marked_panes 2>/dev/null"
 unalias gcl
 
 gcl() {
-    git clone $1 && cd $(echo "$1" | perl -pe 's/.*?(\w+)\.git/\1/g')
+    git clone $1 && cd $(echo "$1" | perl -pe 's/.*?(\[^.]+)\.git/\1/g')
 }
 . ~/.nix-profile/etc/profile.d/nix.sh
+. ~/.zgen/enhancd/init.sh 
 cd .
