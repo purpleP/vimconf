@@ -57,7 +57,7 @@ alias v='nvim'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 
-PROMPT='%F{blue}%T%f %F{yellow}%c%f %# '
+PROMPT='%F{blue}%*%f %F{yellow}%c%f %# '
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export PATH=$PATH:~/.cabal/bin
@@ -188,3 +188,8 @@ gcl() {
 . ~/.nix-profile/etc/profile.d/nix.sh
 . ~/.zgen/enhancd/init.sh 
 cd .
+
+TMOUT=1
+TRAPALRM() {
+    zle reset-prompt
+}
