@@ -111,7 +111,7 @@ if [[ $platform == 'Darwin' ]]; then
 
     bg_luminance() {
         local color=$(osascript -e 'tell app "Iterm2" to get background color of current session of current window')
-        local colors=("${(s/, /)color}") 
+        local colors=("${(s/, /)color}")
         local coefficients=(0.2126 0.7152 0.0722)
         local luminance=0
         for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
@@ -186,7 +186,7 @@ gcl() {
     git clone $1 && cd $(echo "$1" | perl -pe 's/.*?(\[^.]+)\.git/\1/g')
 }
 . ~/.nix-profile/etc/profile.d/nix.sh
-. ~/.zgen/enhancd/init.sh 
+. ~/.zgen/enhancd/init.sh
 cd .
 
 TMOUT=1
