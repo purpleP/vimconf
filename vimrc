@@ -138,10 +138,10 @@ let g:deoplete#sources#clang#clang_header = $LIBCLANG_HEADER
 
 let g:in_git_repo = 0
 
-fu! s:DeniteInit()
+fu! s:DeniteInit(in_git)
     call denite#custom#source(
         \ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-    if g:in_git_repo
+    if a:in_git
         call denite#custom#var('file_rec', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
     endif
 endfu
@@ -155,11 +155,6 @@ augroup SmartNumbers
     au BufLeave,WinLeave * set norelativenumber
     au FocusLost * set norelativenumber
     au FocusGained * set relativenumber
-augroup END
-
-augroup DeniteInit
-    au!
-    au VimEnter * call s:DeniteInit()
 augroup END
 
 set ts=4 sts=4 sw=4 expandtab
@@ -256,5 +251,6 @@ augroup END
 
 augroup git
     au!
-    au User Fugitive let g:in_git_repo = 1 | call s:DeniteInit()
+    au VimEnter * call s:DeniteInit(finddir('.git', ';') != '')
+    au VimEnter * if argc() == 0 | exe 'Denite file_rec'
 augroup END
