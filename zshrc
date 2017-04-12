@@ -151,7 +151,7 @@ setopt histignorespace extended_glob
 
 fzy-history-widget () {
 	local selected num
-	selected=$(history | awk '{$1="";print}' | sort | uniq | fzy -l $LINES)
+	selected=$(history | sort -r | awk '{$1="";print}' | fzy -l $LINES | cut -c2-)
     zle -U $selected
 	zle redisplay
 }

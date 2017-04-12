@@ -1,5 +1,5 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
+filetype on
 filetype plugin indent on    " required
 
 set autowrite
@@ -254,5 +254,4 @@ augroup END
 augroup git
     au!
     au VimEnter * call s:DeniteInit(finddir('.git', ';') != '')
-    au VimEnter * if argc() == 0 | exe 'Denite file_rec'
 augroup END
