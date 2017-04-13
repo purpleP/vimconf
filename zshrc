@@ -70,8 +70,6 @@ if ! zgen saved; then
     echo "Creating a zgen save"
     zgen oh-my-zsh
     zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/dirhistory
-    zgen oh-my-zsh plugins/pip
     zgen oh-my-zsh plugins/vi-mode
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load zsh-users/zsh-completions src
