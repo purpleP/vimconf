@@ -1,5 +1,0 @@
-#! /usr/bin/env zsh
-
-for i in $(< /tmp/marked_panes); do
-    tmux send -t.$i C-c \;
-done

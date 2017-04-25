@@ -1,3 +1,3 @@
-#! /usr/bin/env zsh
-
+#! /usr/bin/env bash
 ! grep -H -n --color pdb $(git diff --cached --name-only)
+pytest -x --tb=no &>/dev/null
