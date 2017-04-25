@@ -56,6 +56,7 @@ alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
 alias v='nvim'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
+alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'
 
 PROMPT='%F{blue}%*%f %F{yellow}%c%f %# '
 
