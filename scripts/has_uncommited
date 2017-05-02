@@ -1,0 +1,5 @@
+#! /usr/bin/env zsh
+
+cd $1
+uncommited=$(git ls-files --modified --deleted --exclude-standard --others;git log @{push}.. 2>/dev/null)
+[[ -n "$uncommited" ]] && echo $1

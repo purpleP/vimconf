@@ -1,0 +1,3 @@
+#! /usr/bin/env zsh
+
+find_repos | xargs has_uncommited

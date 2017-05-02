@@ -1,0 +1,3 @@
+#! /usr/bin/env zsh
+find $HOME/code $HOME/configs $HOME/vimconf $HOME/.vim \
+    -type d -exec test -e '{}/.git' \; -print -prune 2>/dev/null

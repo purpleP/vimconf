@@ -5,4 +5,3 @@ for rem in $(git remote); do
 	oldurl=$(git remote get-url --push $rem)
     git remote set-url --push $rem $(git remote get-url --push $rem | perl -pe 's/https:\/\/([^\/]+)\/(.*)/git@\1:\2/g')
 done
-

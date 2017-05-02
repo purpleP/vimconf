@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+git init
+[[ -e 'README.md' ]] || touch README.md
+
+if [[ -n "$(find -type f -name '*.py' -print -quit | head -n 1)" ]]; then
+    git config core.hooksPath ~/.git_hooks/python
+    curl -o .gitignore --fail --show-error --silent --location https://raw.github.com/github/gitignore/master/Python.gitignore
+fi
