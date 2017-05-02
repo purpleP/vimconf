@@ -52,7 +52,8 @@ alias ipy=ipython
 alias q='exit'
 alias t='tmux'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
-alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
+alias nvim='nvim --cmd "set bg=$(dark_or_light)" \
+    -c "call g:DeniteInit($(test -d $(pwd)/.git && echo 1 || echo 0))"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'

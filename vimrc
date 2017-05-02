@@ -132,7 +132,7 @@ let g:deoplete#sources#clang#clang_header = $LIBCLANG_HEADER
 
 let g:in_git_repo = 0
 
-fu! s:DeniteInit(in_git)
+fu! g:DeniteInit(in_git)
     call denite#custom#source(
         \ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
     call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
@@ -243,9 +243,4 @@ augroup AutoWrite
     au TabLeave * silent! wall
     au FocusLost * silent! wall
     au FocusGained * checktime
-augroup END
-
-augroup git
-    au!
-    au VimEnter * call s:DeniteInit(finddir('.git', ';') != '')
 augroup END
