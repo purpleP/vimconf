@@ -53,10 +53,13 @@ alias q='exit'
 alias t='tmux'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
 alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
-alias v='nvim'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'
+
+function v() {
+    test $# -eq 0 && nvim -c 'execute "Denite file_rec"' || nvim $@
+}
 
 PROMPT='%F{blue}%*%f %F{yellow}%c%f %# '
 
@@ -109,7 +112,10 @@ if [[ $platform == 'Darwin' ]]; then
     export LIBCLANG_HEADER=/Library/Developer/CommandLineTools/usr/lib/clang/8.0.0/include
 
     bg_luminance() {
-        local color=$(osascript -e 'tell app "Iterm2" to get background color of current session of current window')
+        local color=$(osascript -e 'tell app "Iterm2" to get background color of current session of current window' 2>/dev/null)
+        if [[ -z "$color" ]]; then
+            local color=$(osascript -e 'tell app "Terminal" to get background color of window 1')
+        fi
         local colors=("${(s/, /)color}")
         local coefficients=(0.2126 0.7152 0.0722)
         local luminance=0
