@@ -248,4 +248,5 @@ augroup END
 augroup git
     au!
     au VimEnter * call s:DeniteInit(finddir('.git', ';') != '')
+    au VimEnter * if argc() == 0 | exe 'Denite file_rec' | endif
 augroup END
