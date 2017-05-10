@@ -107,8 +107,8 @@ augroup EnableSyntaxHighlighting
                 \ && ! exists('b:current_syntax')
                 \ && ! empty(&l:filetype)
                 \ && index(split(&eventignore, ','), 'Syntax') == -1
-                \| syntax enable |
-                \endif
+                \ | syntax enable |
+                \ endif
 
     " The above does not handle reloading via :bufdo edit!, because the
     " b:current_syntax variable is not cleared by that. During the :bufdo,
