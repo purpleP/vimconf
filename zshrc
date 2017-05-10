@@ -52,14 +52,13 @@ alias ipy=ipython
 alias q='exit'
 alias t='tmux'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
-alias nvim='nvim --cmd "set bg=$(dark_or_light)" \
-    -c "call g:DeniteInit($(test -d $(pwd)/.git && echo 1 || echo 0))"'
+alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'
 
 function v() {
-    test $# -eq 0 && nvim -c 'execute "Denite file_rec"' || nvim $@
+    test $# -eq 0 && nvim -c 'call GitOrFind()' || nvim $@
 }
 
 PROMPT='%F{blue}%*%f %F{yellow}%c%f %# '
