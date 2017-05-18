@@ -15,6 +15,6 @@
 [mergetool]
 	prompt = true
 [mergetool "vimdiff"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J' --cmd "set bg=$(dark_or_light)"
 [core]
 	excludesfile = ~/.gitignore_global
