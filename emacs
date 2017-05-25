@@ -201,3 +201,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'python-mode-hook #'flycheck-virtualenv-setup)
 (projectile-mode)
 (helm-projectile-on)
+
+(defun python-electric-pair-docstring-delimiter ()
+  (when (and electric-pair-mode
+             (memq last-command-event '(?\" ?\'))
+             (let ((count 0))
+               (while (eq (char-before (- (point) count)) last-command-event)
+                 (setq count (1+ count)))
+               (= count 3)))
+    (save-excursion
+      (insert ?\n)
+      (indent-according-to-mode))
+    (newline-and-indent)))
+
+(defun indent-tripple-quotes ()
+  (add-hook 'post-self-insert-hook
+            #'python-electric-pair-docstring-delimiter 'append t))
+(add-hook 'python-mode-hook #'indent-tripple-quotes)
