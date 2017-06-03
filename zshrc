@@ -55,6 +55,7 @@ alias vim='vim --cmd "set bg=$(dark_or_light)"'
 alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
+alias fzy='fzy -l $LINES'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'
 
 function v() {
