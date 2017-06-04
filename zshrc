@@ -56,7 +56,8 @@ alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias fzy='fzy -l $LINES'
-alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest'
+alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest pylint'
+alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
 
 function v() {
     test $# -eq 0 && nvim -c 'call GitOrFind()' || nvim $@
@@ -107,6 +108,17 @@ export XDG_CONFIG_HOME=$HOME/.config
 LC_CTYPE=en_US.UTF-8
 export LC_CTYPE
 local platform=$(uname)
+
+lum() {
+    local colors=("$@")
+    local luminance=0
+    local coefficients=(0.2126 0.7152 0.0722)
+    for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
+    luminance=$(( luminance / 65535 * 100 ))
+    integer luminance
+    echo $luminance
+}
+
 if [[ $platform == 'Darwin' ]]; then
     export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
     export LIBCLANG_PATH=/Library/Developer/CommandLineTools/usr/lib/libclang.dylib
@@ -118,12 +130,7 @@ if [[ $platform == 'Darwin' ]]; then
             local color=$(osascript -e 'tell app "Terminal" to get background color of window 1')
         fi
         local colors=("${(s/, /)color}")
-        local coefficients=(0.2126 0.7152 0.0722)
-        local luminance=0
-        for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
-        luminance=$(( luminance / 65535 * 100 ))
-        integer luminance
-        echo $luminance
+        lum "${colors[@]}"
     }
 else
     export LIBCLANG_PATH=/usr/lib/llvm-3.9/lib/libclang.so
@@ -138,12 +145,7 @@ else
         for hex in "${colors[@]}"; do
             base10_colors+=( $((16#$hex)) )
         done
-        local luminance=0
-        local coefficients=(0.2126 0.7152 0.0722)
-        for i (1 2 3) (( luminance+= coefficients[i] * base10_colors[i] ))
-        luminance=$(( luminance / 65535 * 100 ))
-        integer luminance
-        echo $luminance
+        lum "${base10_colors[@]}"
     }
 
 fi
