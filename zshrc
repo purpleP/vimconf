@@ -55,14 +55,32 @@ alias vim='vim --cmd "set bg=$(dark_or_light)"'
 alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
-alias fzy='fzy -l $(($LINES - 5))'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && pip install ipython pytest pylint'
 alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
-unalias gco='git branch | cut -c 3- | fzy | xargs git checkout'
+unalias gco
+alias gco='git branch | cut -c 3- | fzy | xargs git checkout'
+alias v='nvim'
 
-function v() {
-    test $# -eq 0 && nvim -c 'call GitOrFind()' || nvim $@
+unsetopt flowcontrol
+
+fzy-history-widget () {
+	local selected num
+    selected=$(history | sort -k 2 | uniq -f 1 | sort -rn | sed 's/^\s*[0-9]\+ //' | fzy -l $LINES -q "$LBUFFER" | cut -c2-)
+    zle -U $selected
+	zle redisplay
 }
+zle -N fzy-history-widget
+
+unsetopt flowcontrol
+function fzy-file() {
+	local selected_path
+	echo
+	selected_path=$(ag . -l -g '' | fzy) || return
+	eval 'LBUFFER="$LBUFFER$selected_path"'
+	zle reset-prompt
+}
+zle -N fzy-file
+bindkey "^S" "fzy-file"
 
 PROMPT='%F{blue}%*%f %F{yellow}%c%f %# '
 
@@ -157,14 +175,6 @@ dark_or_light() {
 
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt histignorespace extended_glob
-
-fzy-history-widget () {
-	local selected num
-    selected=$(history | sort -k 2 | uniq -f 1 | sort -rn | sed 's/^\s*[0-9]\+ //' | fzy -l $LINES -q "$LBUFFER" | cut -c2-)
-    zle -U $selected
-	zle redisplay
-}
-zle -N fzy-history-widget
 
 export KEYTIMEOUT=1
 bindkey -v
