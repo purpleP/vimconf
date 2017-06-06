@@ -197,8 +197,8 @@ mark_pane() {
     fi
 }
 
-alias m="mark_pane"
-alias unm="rm /tmp/marked_panes 2>/dev/null"
+alias m='mark_pane'
+alias unm='rm /tmp/marked_panes 2>/dev/null'
 unalias gcl
 
 gcl() {
