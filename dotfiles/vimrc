@@ -181,7 +181,6 @@ endf
 fun! MaximizeOrNothing()
     if &columns < 170
         wincmd |
-        wincmd _
     endif
 endf
 
