@@ -7,12 +7,17 @@ fu! s:Reload(jobid, data, event)
         sp /tmp/queries/q1.txt
         edit
         setlocal nowrap
-        nnoremap <buffer> q windcmd q
+        nnoremap <buffer> q :q<CR>
     endif
 endfu
 
 fu! s:SendToMysql()
     let l:pane = system("tmux list-panes -F '#{pane_index} #{pane_current_command}' | grep mysql | cut -d' ' -f1")
+    if l:pane == ''
+        call system("tmux split-window; tmux send -t .1 '!mysql' Enter; tmux select-pane -t .1")
+        echom 'create pane first'
+        return
+    endif
     let l:save_reg = getreg('"')
     normal! yip
     let l:temp = tempname()
