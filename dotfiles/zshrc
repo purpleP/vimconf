@@ -183,6 +183,15 @@ zle -N vi-append-x-selection
 bindkey '^R' fzy-history-widget
 bindkey -M vicmd 'p' vi-append-x-selection
 bindkey -M vicmd '?' fzy-history-widget
+bindkey -r viins '\e'
+
+to-cmd-mode() {
+    setxkbmap us
+    zle vi-cmd-mode
+}
+zle -N to-cmd-mode
+
+bindkey -M viins '\e' to-cmd-mode
 
 uncommited() {
     find ~/code ~/vimconf ~/configs ~/.vim/plugged -type d -exec test -e '{}/.git' \; -print -prune 2>/dev/null | \

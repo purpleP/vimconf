@@ -250,3 +250,8 @@ augroup AutoWrite
     au FocusLost * silent! wall
     au FocusGained * checktime
 augroup END
+
+augroup Language
+    au!
+    au InsertEnter * silent! !setxkbmap us
+augroup END
