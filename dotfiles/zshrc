@@ -152,7 +152,7 @@ bindkey -M vicmd '?' fzy-history-widget
 bindkey -r viins '\e'
 
 to-cmd-mode() {
-    setxkbmap us
+    keyboard_layout 0
     zle vi-cmd-mode
 }
 zle -N to-cmd-mode
