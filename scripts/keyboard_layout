@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+
+if [[ $(uname) == 'Linux' ]]; then
+    if [[ "$#" == 0 ]]; then
+        gsettings get org.gnome.desktop.input-sources current | cut -d ' ' -f 2
+    else
+        gsettings set org.gnome.desktop.input-sources current $1
+    fi
+fi

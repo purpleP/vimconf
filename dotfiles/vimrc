@@ -251,7 +251,14 @@ augroup AutoWrite
     au FocusGained * checktime
 augroup END
 
+let g:last_insert_layout = system('keyboard_layout')
+fu! SaveLayoutAndSwitch()
+    let g:last_insert_layout = system('keyboard_layout')
+    silent! !keyboard_layout 0
+endfu
+
 augroup Language
     au!
-    au InsertEnter * silent! !setxkbmap us
+    au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
+    au InsertLeave * call SaveLayoutAndSwitch()
 augroup END

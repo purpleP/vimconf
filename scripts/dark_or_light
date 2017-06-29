@@ -1,0 +1,32 @@
+#! /usr/bin/env zsh
+lum() {
+    local colors=("$@")
+    local luminance=0
+    local coefficients=(0.2126 0.7152 0.0722)
+    for i (1 2 3) (( luminance+= coefficients[i] * colors[i] ))
+    luminance=$(( luminance / 65535 * 100 ))
+    integer luminance
+    echo $luminance
+}
+
+bg_luminance() {
+    if [[ $(uname) == 'Linux' ]]; then
+        local regex="s/rgb:\([^/]\+\)\/\([^/]\+\)\/\([^/]\+\)/\1 \2 \3/p"
+        local colors=( $(xtermcontrol --get-bg | sed -n $regex) )
+        typeset -a base10_colors
+        for hex in "${colors[@]}"; do
+            base10_colors+=( $((16#$hex)) )
+        done
+        lum "${base10_colors[@]}"
+    else
+        local color=$(osascript -e 'tell app "Iterm2" to get background color of current session of current window' 2>/dev/null)
+        if [[ -z "$color" ]]; then
+            local color=$(osascript -e 'tell app "Terminal" to get background color of window 1')
+        fi
+        local colors=("${(s/, /)color}")
+        lum "${colors[@]}"
+    fi
+}
+
+[[ $(bg_luminance) -ge 50 ]] && echo 'light' || echo 'dark'
+
