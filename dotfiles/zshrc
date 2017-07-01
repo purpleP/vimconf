@@ -159,12 +159,6 @@ zle -N to-cmd-mode
 
 bindkey -M viins '\e' to-cmd-mode
 
-uncommited() {
-    find ~/code ~/vimconf ~/configs ~/.vim/plugged -type d -exec test -e '{}/.git' \; -print -prune 2>/dev/null | \
-        xargs -I {} $SHELL -c \
-        'dir={};cd $dir;uncommited=$(git ls-files --modified --deleted --exclude-standard --others;git log @{push}.. 2>/dev/null);if [ -n "$uncommited" ];then echo $dir;fi'
-}
-
 mark_pane() {
     if [ -n "$TMUX_PANE" ]; then
         sed -i "/$TMUX_PANE/d" /tmp/marked_panes 2>/dev/null
