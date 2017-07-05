@@ -2,11 +2,10 @@ set nocompatible              " be iMproved, required
 filetype on
 filetype plugin indent on    " required
 
-set autowrite
+set autowriteall
 set breakindent
 set backspace=indent,eol,start
 set completeopt=menuone,preview
-set confirm
 set foldlevel=99
 set foldmethod=indent
 set lazyredraw
