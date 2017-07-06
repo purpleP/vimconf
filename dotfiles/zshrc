@@ -105,9 +105,11 @@ bindkey "^S" "fzy-file"
 
 function zle-line-init zle-keymap-select {
     if [[ $KEYMAP == 'vicmd' ]]; then
+        print -n -- "\E]50;CursorShape=0\C-G"
         color='red'
         mode='N'
     else
+        print -n -- "\E]50;CursorShape=1\C-G"
         color='green'
         mode='I'
     fi
