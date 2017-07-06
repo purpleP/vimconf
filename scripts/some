@@ -1,11 +1,3 @@
 #! /usr/bin/env bash
-mkdir -p /tmp/queries
-
-for i in $(ls /tmp/queries -tr | sed '1d'); do
-  c=$(echo ${i//[A-Z\.]/})
-  let c=$c+1
-  new_f=$( printf "q%01d.%s" $c "${i##*.}" )
-  mv -f /tmp/queries/$i /tmp/queries/$new_f
-done
-cp /tmp/queries/q1.txt /tmp/queries/q2.txt
-cat > /tmp/queries/q1.txt
+mkdir /tmp/queries
+cat > /tmp/queries/$(date +%Y-%m-%d_%H-%M-%s).txt

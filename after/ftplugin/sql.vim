@@ -1,5 +1,5 @@
-fu! s:Reload(jobid, data, event)
-    let l:result_buffer = bufwinnr('/tmp/queries/q1.txt')
+let s:outputs = {}
+fu! s:ShowResults(jobid, data, event)
     if l:result_buffer > 0
         exe l:result_buffer . ' wincmd w'
         edit
@@ -24,7 +24,9 @@ fu! s:SendToMysql()
     let l:lines = split(getreg('"'), '\n')
     let l:lines[len(l:lines) - 1] = l:lines[len(l:lines) - 1] . ';'
     call writefile(l:lines, l:temp)
-    call jobstart(['inotifywait', '-e', 'move_self', 'create', '/tmp/queries/q1.txt' ], {'on_exit': function('s:Reload')})
+    let l:hash = system('md5sum ' . l:temp . ' | cut -d" " -f1') 
+    let l:jobid = call jobstart(['inotifywait', '-e', 'create', '/tmp/queries/' ], {'on_stdout': function('s:ShowResults')})
+    s:outputs[l:jobid] = l:hash
     call system('tmux load-buffer -b ' . l:temp . ' ' . l:temp)
     call system('tmux paste-buffer -b ' . l:temp . ' -t .' . l:pane)
     call system('tmux delete-buffer -b ' . l:temp)
