@@ -78,7 +78,6 @@ TRAPWINCH() {
 zle -N zle-keymap-select
 zle -N edit-command-line
 
-
 bindkey -v
 
 autoload -Uz edit-command-line
@@ -113,8 +112,7 @@ function zle-line-init zle-keymap-select {
         color='green'
         mode='I'
     fi
-    [[ -n "$TMUX" ]] && cursor="\EPtmux;\E$cursor\E\\"
-    print -n -- $cursor
+    [[ -n "$TMUX" ]]
     VIMODE="%B%K{$color}%F{white}[$mode]%f%k%b"
     zle reset-prompt
 }
