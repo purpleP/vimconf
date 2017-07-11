@@ -1,3 +1,3 @@
 #! /usr/bin/env bash
-mkdir /tmp/queries
+mkdir /tmp/queries 2>/dev/null
 cat > /tmp/queries/$(date +%Y-%m-%d_%H-%M-%s).txt
