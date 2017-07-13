@@ -1,15 +1,19 @@
-let s:outputs = {}
 fu! s:ShowResults(query_hash, jobid, data, event)
-    let l:filename = a:data[0]
-    let s:outputs[a:query_hash] = l:filename
-    if 
-    exe 'sview /tmp/queries/' . l:filename
+    unlet s:jobid
+    if exists('s:results_window')
+        exe s:results_window . ' wincmd w'
+    else
+        split
+        wincmd j
+    endif
+    exe 'view /tmp/queries/' . a:query_hash
+    let s:results_window = winnr()
     setlocal nowrap
     nnoremap <buffer> q :q<CR>
 endfu
 
 fu! s:SendToMysql()
-    let l:pane = system("tmux list-panes -F '#{pane_index} #{pane_current_command}' | grep mysql | cut -d' ' -f1")
+    let l:pane = system("tmux list-panes -F '#{pane_index} #{pane_current_command}' | grep mysql | cut -d' ' -f1")[0:-2]
     if l:pane == ''
         call system("tmux split-window; tmux send -t:+1 '!mysql' Enter")
         echom 'create pane first'
@@ -21,9 +25,24 @@ fu! s:SendToMysql()
     let l:lines = split(getreg('"'), '\n')
     let l:lines[len(l:lines) - 1] = l:lines[len(l:lines) - 1] . ';'
     call writefile(l:lines, l:temp)
-    let l:query_hash = system('md5sum ' . l:temp . ' | cut -d" " -f1')
+    let l:query_hash = system('md5sum ' . l:temp . ' | cut -d" " -f1')[0:-2]
+    echom l:query_hash
+    let l:full_path = '/tmp/queries/' . l:query_hash
+    if filereadable(l:full_path)
+        call system('mv ' . l:full_path . ' ' . l:full_path . '_$(date -r ' . l:full_path . ' +%s)')
+    endif
+    call system('touch ' . l:full_path)
     let l:Cb = function('s:ShowResults', [l:query_hash])
-    let l:jobid = jobstart('inotifywait -q -e create /tmp/queries/ | cut -d" " -f3' , {'on_stdout': l:Cb})
+    if exists('s:jobid')
+        call jobstop(s:jobid)
+        call system('find /tmp/queries --maxdepth 1 -empty -type f -delete')
+    endif
+    let l:cmd = 'inotifywait -q -e close ' . l:full_path
+    let s:jobid = jobstart(l:cmd, {'on_exit': l:Cb})
+    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager some ' . l:query_hash . '"'
+    echom l:cmd
+    call system(l:cmd)
+    call system('tmux send-keys -t .' . l:pane . ' Enter')
     call system('tmux load-buffer -b ' . l:temp . ' ' . l:temp)
     call system('tmux paste-buffer -b ' . l:temp . ' -t .' . l:pane)
     call system('tmux delete-buffer -b ' . l:temp)
