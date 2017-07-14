@@ -3,8 +3,8 @@ filetype on
 filetype plugin indent on    " required
 
 set autowriteall
-set breakindent
 set backspace=indent,eol,start
+set breakindent
 set completeopt=menuone,preview
 set foldlevel=99
 set foldmethod=indent
@@ -21,6 +21,7 @@ set splitright
 set virtualedit=insert
 set wildignore+=*.pyc,*.so,*.swp,*.zip,.*/**
 set wildmenu
+set winminheight=0
 
 if !has('nvim')
     set encoding=utf-8
