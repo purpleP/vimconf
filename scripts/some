@@ -1,4 +1,0 @@
-#! /usr/bin/env bash
-mkdir /tmp/queries 2>/dev/null
-query_hash=$1
-cat > /tmp/queries/$query_hash

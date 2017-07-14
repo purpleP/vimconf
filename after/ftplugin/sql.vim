@@ -39,7 +39,7 @@ fu! s:SendToMysql()
     endif
     let l:cmd = 'inotifywait -q -e close ' . l:full_path
     let s:jobid = jobstart(l:cmd, {'on_exit': l:Cb})
-    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager some ' . l:query_hash . '"'
+    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager cat > ' . l:query_hash . '"'
     echom l:cmd
     call system(l:cmd)
     call system('tmux send-keys -t .' . l:pane . ' Enter')
