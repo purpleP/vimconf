@@ -198,3 +198,9 @@ augroup Language
     au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
     au InsertLeave * call SaveLayoutAndSwitch()
 augroup END
+
+set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l.%v/%L\ %p%%
+augroup StatusLine
+    au!
+    au WinEnter,WinLeave,WinNew * redrawstatus!
+augroup END
