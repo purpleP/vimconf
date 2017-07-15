@@ -2,4 +2,5 @@
 
 git ls-files -co --exclude-standard \
     | awk -F\. '{print $NF}' | sort -u \
-    | parallel "test -e ~/vimconf/git_hooks/{} && parallel ::: ~/vimconf/git_hooks/{}/$1/*"
+    | parallel "test -e ~/vimconf/git_hooks/{}/$1 && readlink -f ~/vimconf/git_hooks/{}/$1" \
+    | uniq | parallel find {} -type f | parallel
