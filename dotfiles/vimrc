@@ -1,6 +1,6 @@
-set nocompatible              " be iMproved, required
+set nocompatible
 filetype on
-filetype plugin indent on    " required
+filetype plugin indent on
 
 set autowriteall
 set backspace=indent,eol,start
