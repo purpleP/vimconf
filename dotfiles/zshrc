@@ -95,7 +95,7 @@ unsetopt flowcontrol
 function fzy-file() {
 	local selected_path
 	echo
-	selected_path=$(ag . -l -g '' | fzy) || return
+	selected_path=$(find -L -type d -path '*/.*' -prune -o -type f -print -type l -print | fzy) || return
 	eval 'LBUFFER="$LBUFFER$selected_path"'
 	zle reset-prompt
 }
