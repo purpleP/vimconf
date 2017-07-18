@@ -1,13 +1,12 @@
 fu! s:ShowResults(query_hash, jobid, data, event)
     unlet s:jobid
-    if exists('s:results_window')
-        exe s:results_window . ' wincmd w'
+    let l:b = bufwinnr('/tmp/queries/*')
+    if l:b > 0
+        exe b.'wincmd w'
     else
         split
-        wincmd j
     endif
     exe 'view /tmp/queries/' . a:query_hash
-    let s:results_window = winnr()
     setlocal nowrap
     nnoremap <buffer> q :q<CR>
 endfu
@@ -26,7 +25,6 @@ fu! s:SendToMysql()
     let l:lines[len(l:lines) - 1] = l:lines[len(l:lines) - 1] . ';'
     call writefile(l:lines, l:temp)
     let l:query_hash = system('md5sum ' . l:temp . ' | cut -d" " -f1')[0:-2]
-    echom l:query_hash
     let l:full_path = '/tmp/queries/' . l:query_hash
     if filereadable(l:full_path)
         call system('mv ' . l:full_path . ' ' . l:full_path . '_$(date -r ' . l:full_path . ' +%s)')
@@ -39,8 +37,7 @@ fu! s:SendToMysql()
     endif
     let l:cmd = 'inotifywait -q -e close ' . l:full_path
     let s:jobid = jobstart(l:cmd, {'on_exit': l:Cb})
-    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager cat > ' . l:query_hash . '"'
-    echom l:cmd
+    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager cat > /tmp/queries/' . l:query_hash . '"'
     call system(l:cmd)
     call system('tmux send-keys -t .' . l:pane . ' Enter')
     call system('tmux load-buffer -b ' . l:temp . ' ' . l:temp)
