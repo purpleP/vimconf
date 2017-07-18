@@ -30,7 +30,7 @@ if !has('nvim')
 endif
 
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+    set grepprg=grep\ -rIHnP\ --exclude-dir='.*'
 endif
 
 if has("persistent_undo")
