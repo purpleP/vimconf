@@ -3,15 +3,16 @@ fu! s:ShowResults(query_hash, jobid, data, event)
 endfu
 
 fu! s:OpenResults(query_hash)
-    let l:b = bufwinnr('/tmp/results/*')
-    if l:b > 0
-        exe b.'wincmd w'
+    let l:id = bufwinid('/tmp/results/*')
+    if l:id > 0
+        call win_gotoid(l:id)
     else
         split
     endif
     exe 'view /tmp/results/' . a:query_hash
     setlocal nowrap
     nnoremap <buffer> q :q<CR>
+    nnoremap <buffer> <CR> :call <SID>Refresh()<CR>
 endfu
 
 fu! s:SaveQueryAndHash()
@@ -32,25 +33,24 @@ fu! s:OpenLastResults()
     call s:OpenResults(l:hash)
 endfu
 
-fu! s:Refresh(args)
-    
+fu! s:Refresh()
+    call s:ExecuteQuery(expand('%:t'))
 endfu
 
-fu! s:SendToMysql()
+fu! s:ExecuteQuery(hash)
     let l:pane = system("tmux list-panes -F '#{pane_index} #{pane_current_command}' | grep mysql | cut -d' ' -f1")[0:-2]
     if l:pane == ''
         call system("tmux split-window; tmux send -t:+1 '!mysql' Enter")
         echom 'create pane first'
         return
     endif
-    let l:hash = s:SaveQueryAndHash()
-    let l:query = '/tmp/queries/' . l:hash
-    let l:result = '/tmp/results/' . l:hash
+    let l:query = '/tmp/queries/' . a:hash
+    let l:result = '/tmp/results/' . a:hash
     if filereadable(l:result)
         call system('mv ' . l:result . ' ' . l:result . '_$(date -r ' . l:result . ' +%s)')
     endif
     call system('touch ' . l:result)
-    let l:Cb = function('s:ShowResults', [l:hash])
+    let l:Cb = function('s:ShowResults', [a:hash])
     call system('find /tmp/results --maxdepth 1 -empty -type f -delete')
     let l:cmd = 'inotifywait -q -e close ' . l:result
     let s:jobid = jobstart(l:cmd, {'on_exit': l:Cb})
@@ -61,6 +61,10 @@ fu! s:SendToMysql()
     call system('tmux load-buffer -b ' . l:query . ' ' . l:query)
     call system('tmux paste-buffer -b ' . l:query . ' -t .' . l:pane)
     call system('tmux delete-buffer -b ' . l:query)
+endfu
+
+fu! s:SendToMysql()
+    call s:ExecuteQuery(s:SaveQueryAndHash())
 endfu
 
 nnoremap <silent> <buffer> <CR> :call <SID>SendToMysql()<CR>
