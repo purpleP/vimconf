@@ -79,6 +79,17 @@ zle -N edit-command-line
 
 bindkey -v
 
+fzy-jobs-widget () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        fg $(jobs | fzy | sed -rn "s/\[([0-9]+)\].*/%\1/p")
+    else
+        zle push-input
+    fi
+}
+zle -N fzy-jobs-widget
+bindkey '^Z' fzy-jobs-widget
+
+
 autoload -Uz edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 bindkey '^P' up-history
@@ -98,7 +109,7 @@ function fzy-file() {
 	zle reset-prompt
 }
 zle -N fzy-file
-bindkey "^S" "fzy-file"
+bindkey "^S" fzy-file
 
 function zle-line-init zle-keymap-select {
     if [[ $KEYMAP == 'vicmd' ]]; then
