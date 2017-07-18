@@ -1,14 +1,39 @@
 fu! s:ShowResults(query_hash, jobid, data, event)
-    unlet s:jobid
-    let l:b = bufwinnr('/tmp/queries/*')
+    call s:OpenResults(a:query_hash)
+endfu
+
+fu! s:OpenResults(query_hash)
+    let l:b = bufwinnr('/tmp/results/*')
     if l:b > 0
         exe b.'wincmd w'
     else
         split
     endif
-    exe 'view /tmp/queries/' . a:query_hash
+    exe 'view /tmp/results/' . a:query_hash
     setlocal nowrap
     nnoremap <buffer> q :q<CR>
+endfu
+
+fu! s:SaveQueryAndHash()
+    let l:save_reg = getreg('"')
+    normal! yip
+    let l:temp = tempname()
+    let l:lines = split(getreg('"'), '\n')
+    call setreg('"', l:save_reg)
+    let l:lines[len(l:lines) - 1] = l:lines[len(l:lines) - 1] . ';'
+    call writefile(l:lines, l:temp)
+    let l:hash = system('md5sum ' . l:temp . ' | cut -d" " -f1')[0:-2]
+    call system('cp ' . l:temp . ' /tmp/queries/' . l:hash)
+    return l:hash
+endfu
+
+fu! s:OpenLastResults()
+    let l:hash = s:SaveQueryAndHash()
+    call s:OpenResults(l:hash)
+endfu
+
+fu! s:Refresh(args)
+    
 endfu
 
 fu! s:SendToMysql()
@@ -18,32 +43,28 @@ fu! s:SendToMysql()
         echom 'create pane first'
         return
     endif
-    let l:save_reg = getreg('"')
-    normal! yip
-    let l:temp = tempname()
-    let l:lines = split(getreg('"'), '\n')
-    let l:lines[len(l:lines) - 1] = l:lines[len(l:lines) - 1] . ';'
-    call writefile(l:lines, l:temp)
-    let l:query_hash = system('md5sum ' . l:temp . ' | cut -d" " -f1')[0:-2]
-    let l:full_path = '/tmp/queries/' . l:query_hash
-    if filereadable(l:full_path)
-        call system('mv ' . l:full_path . ' ' . l:full_path . '_$(date -r ' . l:full_path . ' +%s)')
+    let l:hash = s:SaveQueryAndHash()
+    let l:query = '/tmp/queries/' . l:hash
+    let l:result = '/tmp/results/' . l:hash
+    if filereadable(l:result)
+        call system('mv ' . l:result . ' ' . l:result . '_$(date -r ' . l:result . ' +%s)')
     endif
-    call system('touch ' . l:full_path)
-    let l:Cb = function('s:ShowResults', [l:query_hash])
-    if exists('s:jobid')
-        call jobstop(s:jobid)
-        call system('find /tmp/queries --maxdepth 1 -empty -type f -delete')
-    endif
-    let l:cmd = 'inotifywait -q -e close ' . l:full_path
+    call system('touch ' . l:result)
+    let l:Cb = function('s:ShowResults', [l:hash])
+    call system('find /tmp/results --maxdepth 1 -empty -type f -delete')
+    let l:cmd = 'inotifywait -q -e close ' . l:result
     let s:jobid = jobstart(l:cmd, {'on_exit': l:Cb})
-    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager cat > /tmp/queries/' . l:query_hash . '"'
+    let l:cmd = 'tmux send-keys -t .' . l:pane . ' -l "pager cat > ' . l:result . '"'
     call system(l:cmd)
+
     call system('tmux send-keys -t .' . l:pane . ' Enter')
-    call system('tmux load-buffer -b ' . l:temp . ' ' . l:temp)
-    call system('tmux paste-buffer -b ' . l:temp . ' -t .' . l:pane)
-    call system('tmux delete-buffer -b ' . l:temp)
-    call setreg('"', l:save_reg)
+    call system('tmux load-buffer -b ' . l:query . ' ' . l:query)
+    call system('tmux paste-buffer -b ' . l:query . ' -t .' . l:pane)
+    call system('tmux delete-buffer -b ' . l:query)
 endfu
 
 nnoremap <silent> <buffer> <CR> :call <SID>SendToMysql()<CR>
+nnoremap <silent> <buffer> <leader>o :call <SID>OpenLastResults()<CR>
+if executable('sqlint')
+    packadd ale
+endif
