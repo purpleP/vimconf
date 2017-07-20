@@ -5,23 +5,22 @@ function! s:DockerfileReplaceInstruction(original, replacement)
     else
         let word = a:original
     endif
-    let g:UnduBuffer = a:original
     return word
 endfunction
 
-inoreabbr <silent> <buffer> from <C-R>=<SID>DockerfileReplaceInstruction("from", "FROM")<CR>
-inoreabbr <silent> <buffer> maintainer <C-R>=<SID>DockerfileReplaceInstruction("maintainer", "MAINTAINER")<CR>
-inoreabbr <silent> <buffer> run <C-R>=<SID>DockerfileReplaceInstruction("run", "RUN")<CR>
-inoreabbr <silent> <buffer> cmd <C-R>=<SID>DockerfileReplaceInstruction("cmd", "CMD")<CR>
-inoreabbr <silent> <buffer> label <C-R>=<SID>DockerfileReplaceInstruction("label", "LABEL")<CR>
-inoreabbr <silent> <buffer> expose <C-R>=<SID>DockerfileReplaceInstruction("expose", "EXPOSE")<CR>
-inoreabbr <silent> <buffer> env <C-R>=<SID>DockerfileReplaceInstruction("env", "ENV")<CR>
-inoreabbr <silent> <buffer> add <C-R>=<SID>DockerfileReplaceInstruction("add", "ADD")<CR>
-inoreabbr <silent> <buffer> copy <C-R>=<SID>DockerfileReplaceInstruction("copy", "COPY")<CR>
-inoreabbr <silent> <buffer> entrypoint <C-R>=<SID>DockerfileReplaceInstruction("entrypoint", "ENTRYPOINT")<CR>
-inoreabbr <silent> <buffer> volume <C-R>=<SID>DockerfileReplaceInstruction("volume", "VOLUME")<CR>
-inoreabbr <silent> <buffer> user <C-R>=<SID>DockerfileReplaceInstruction("user", "USER")<CR>
-inoreabbr <silent> <buffer> workdir <C-R>=<SID>DockerfileReplaceInstruction("workdir", "WORKDIR")<CR>
-inoreabbr <silent> <buffer> arg <C-R>=<SID>DockerfileReplaceInstruction("arg", "ARG")<CR>
-inoreabbr <silent> <buffer> onbuild <C-R>=<SID>DockerfileReplaceInstruction("onbuild", "ONBUILD")<CR>
-inoreabbr <silent> <buffer> stopsignal <C-R>=<SID>DockerfileReplaceInstruction("stopsignal", "STOPSIGNAL")<CR>
+inoreabbr <expr> <silent> <buffer> from <SID>DockerfileReplaceInstruction("from", "FROM")
+inoreabbr <expr> <silent> <buffer> maintainer <SID>DockerfileReplaceInstruction("maintainer", "MAINTAINER")
+inoreabbr <expr> <silent> <buffer> run <SID>DockerfileReplaceInstruction("run", "RUN")
+inoreabbr <expr> <silent> <buffer> cmd <SID>DockerfileReplaceInstruction("cmd", "CMD")
+inoreabbr <expr> <silent> <buffer> label <SID>DockerfileReplaceInstruction("label", "LABEL")
+inoreabbr <expr> <silent> <buffer> expose <SID>DockerfileReplaceInstruction("expose", "EXPOSE")
+inoreabbr <expr> <silent> <buffer> env <SID>DockerfileReplaceInstruction("env", "ENV")
+inoreabbr <expr> <silent> <buffer> add <SID>DockerfileReplaceInstruction("add", "ADD")
+inoreabbr <expr> <silent> <buffer> copy <SID>DockerfileReplaceInstruction("copy", "COPY")
+inoreabbr <expr> <silent> <buffer> entrypoint <SID>DockerfileReplaceInstruction("entrypoint", "ENTRYPOINT")
+inoreabbr <expr> <silent> <buffer> volume <SID>DockerfileReplaceInstruction("volume", "VOLUME")
+inoreabbr <expr> <silent> <buffer> user <SID>DockerfileReplaceInstruction("user", "USER")
+inoreabbr <expr> <silent> <buffer> workdir <SID>DockerfileReplaceInstruction("workdir", "WORKDIR")
+inoreabbr <expr> <silent> <buffer> arg <SID>DockerfileReplaceInstruction("arg", "ARG")
+inoreabbr <expr> <silent> <buffer> onbuild <SID>DockerfileReplaceInstruction("onbuild", "ONBUILD")
+inoreabbr <expr> <silent> <buffer> stopsignal <SID>DockerfileReplaceInstruction("stopsignal", "STOPSIGNAL")

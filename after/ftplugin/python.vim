@@ -1,7 +1,5 @@
 let g:python_highlight_all = 1
 
-let delimitMate_smart_quotes = '\%([^[:punct:][:space:]fubr]\|\%(\\\\\)*\\\)\%#\|\%#\%([^[:space:][:punct:]fubr]\)'
-let b:delimitMate_nesting_quotes = ['"', "'"]
 nnoremap gb :call AddBreakPoint()<cr>
 
 set includeexpr=substitute(v:fname,'\\.','/','g')
