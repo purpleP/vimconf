@@ -4,11 +4,11 @@ Shougo/denite.nvim start
 Shougo/deoplete.nvim start
 SirVer/ultisnips opt
 Valloric/MatchTagAlways opt
+Vimjas/vim-python-pep8-indent opt
 davidhalter/jedi-vim opt
 eagletmt/neco-ghc opt
 easymotion/vim-easymotion start
 ervandew/supertab start
-Vimjas/vim-python-pep8-indent opt
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim opt

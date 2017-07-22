@@ -180,6 +180,7 @@ augroup END
 
 augroup AutoWrite
     au!
+    au BufWritePre * call system('mkdir -p '.shellescape(expand('%:p:h')))
     au BufLeave * silent! wall
     au TabLeave * silent! wall
     au FocusLost * silent! wall

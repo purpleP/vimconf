@@ -1,16 +1,3 @@
-function! s:SqlToUpper(original)
-    let syn = synIDtrans(synID(line('.'), col('.') - 1, 0))
-    if syn == hlID('Statement') || syn == hlID('Function')  || syn == hlID('Type') || syn == hlID('Special')
-        return toupper(a:original)
-    else
-        return a:original
-    endif
-endfunction
-
-for keyword in readfile($HOME.'/vimconf/mysql_keywords.txt')
-    exe 'iabbr <expr> <buffer> ' . keyword . ' <SID>SqlToUpper("'. keyword . '")'
-endfor
-
 fu! s:ShowResults(query_hash, jobid, data, event)
     call s:OpenResults(a:query_hash)
 endfu
@@ -85,3 +72,4 @@ nnoremap <silent> <buffer> <leader>o :call <SID>OpenLastResults()<CR>
 if executable('sqlint')
     packadd ale
 endif
+packadd vim-sql-auto-uppercase
