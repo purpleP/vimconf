@@ -18,6 +18,7 @@ set shortmess+=A
 set smartcase
 set splitbelow
 set splitright
+set termguicolors
 set virtualedit=insert
 set wildignore+=*.pyc,*.so,*.swp,*.zip,.*/**
 set wildmenu
