@@ -8,6 +8,7 @@ davidhalter/jedi-vim start
 eagletmt/neco-ghc opt
 easymotion/vim-easymotion start
 ervandew/supertab start
+jiangmiao/auto-pairs start
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim start
