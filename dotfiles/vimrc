@@ -1,4 +1,3 @@
-set nocompatible
 filetype on
 filetype plugin indent on
 
@@ -204,4 +203,9 @@ set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l.%v/%L\ %p%%
 augroup StatusLine
     au!
     au WinEnter,WinLeave,WinNew * redrawstatus!
+augroup END
+
+augroup UltSnipsOnDemand
+    au!
+    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips | endif
 augroup END

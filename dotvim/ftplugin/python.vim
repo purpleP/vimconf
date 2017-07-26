@@ -40,9 +40,4 @@ let b:switch_custom_definitions =
     \ ]
 
 packadd ale
-packadd deoplete-jedi
-packadd jedi-vim
-packadd python-syntax
 packadd switch.vim
-packadd ultisnips
-packadd vim-python-pep8-indent

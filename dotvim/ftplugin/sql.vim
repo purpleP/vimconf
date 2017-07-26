@@ -72,4 +72,3 @@ nnoremap <silent> <buffer> <leader>o :call <SID>OpenLastResults()<CR>
 if executable('sqlint')
     packadd ale
 endif
-packadd vim-sql-auto-uppercase
