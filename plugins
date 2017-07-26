@@ -11,6 +11,7 @@ ervandew/supertab start
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim start
+purpleP/autouppercase start
 purpleP/python-syntax start
 purpleP/vim-colors-solarized start
 tmux-plugins/vim-tmux-focus-events start
