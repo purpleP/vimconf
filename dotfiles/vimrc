@@ -1,5 +1,6 @@
 filetype on
 filetype plugin indent on
+syntax enable
 
 set autowriteall
 set backspace=indent,eol,start
@@ -12,7 +13,6 @@ set mouse-=a
 set number
 set path+=**
 set relativenumber
-set ruler
 set shortmess+=A
 set smartcase
 set splitbelow
@@ -42,12 +42,7 @@ if has('nvim')
     set inccommand=nosplit
 endif
 
-syntax enable
 silent! colorscheme solarized
-
-let delimitMate_jump_expansion = 0
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr = 1
 
 let mapleader = "\<Space>"
 inoremap <C-l> <right>
@@ -65,7 +60,6 @@ augroup myvimrc
     au BufEnter .vimrc set ft=vim
 augroup END
 
-let g:UltiSnipsEditSplit='horizontal'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay=50
 let g:deoplete#sources#clang#libclang_path = $LIBCLANG_PATH
