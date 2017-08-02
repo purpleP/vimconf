@@ -69,6 +69,3 @@ endfu
 
 nnoremap <silent> <buffer> <CR> :call <SID>SendToMysql()<CR>
 nnoremap <silent> <buffer> <leader>o :call <SID>OpenLastResults()<CR>
-if executable('sqlint')
-    packadd ale
-endif

@@ -14,6 +14,7 @@ set number
 set path+=**
 set relativenumber
 set shortmess+=A
+set signcolumn=no
 set smartcase
 set splitbelow
 set splitright

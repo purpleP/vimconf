@@ -39,5 +39,15 @@ let b:switch_custom_definitions =
     \   ['True', 'False'],
     \ ]
 
-packadd ale
 packadd switch.vim
+
+let s:pylint_cmd = 'pylint --reports=no --output-format=colorized '
+
+fu! Lint()
+    " call system('tmux send-keys -t.+1 "' . s:pylint_cmd . expand('%') . '" Enter')
+endfu
+
+augroup Lint
+    au!
+    au BufEnter,TextChanged,InsertLeave *.py silent! w | call Lint()
+augroup END
