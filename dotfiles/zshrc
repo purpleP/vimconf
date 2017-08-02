@@ -205,12 +205,6 @@ to-cmd-mode() {
 }
 zle -N to-cmd-mode
 
-tmux-copy-mode() {
-    tmux copy-mode 2>/dev/null
-}
-zle -N tmux-copy-mode
-bindkey -M vicmd '\e' tmux-copy-mode
-
 bindkey -M viins '\e' to-cmd-mode
 
 mark_pane() {
