@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+inotifywait -r -m -e close_write -q $1 |
+while read -r directory events filename; do
+    clear
+    if ! tmux list-panes -F '#{window_visible_layout}' | grep -q '\{'; then
+        echo was zoomed, zooming out
+        tmux resize-pane -Z
+    fi
+    cat $directory/$filename
+done
