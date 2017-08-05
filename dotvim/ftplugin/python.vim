@@ -39,5 +39,4 @@ let b:switch_custom_definitions =
     \   ['True', 'False'],
     \ ]
 
-packadd ale
 packadd switch.vim

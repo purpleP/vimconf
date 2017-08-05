@@ -1,0 +1,28 @@
+#! /usr/bin/env python3
+
+import sys
+from urllib.parse import quote, unquote
+from subprocess import check_output, CalledProcessError
+from pathlib import Path
+
+
+def results_changed(results, file):
+    try:
+        with open(file, 'r') as f:
+            return lint_results != f.read()
+    except FileNotFoundError:
+        return True
+        
+
+path = sys.argv[-1]
+directory = Path('/tmp/lint')
+file = directory / Path(quote(path, safe=()))
+try:
+    lint_results = check_output(sys.argv[1:])
+except CalledProcessError as e:
+    lint_results = e.output
+lint_results = str(lint_results, 'utf-8')
+if results_changed(lint_results, file):
+    print(f'results chanched, writing to {file}')
+    with open(file, 'w') as f:
+        f.write(lint_results)
