@@ -4,8 +4,10 @@ inotifywait -r -m -e close_write -q $1 |
 while read -r directory events filename; do
     clear
     if ! tmux list-panes -F '#{window_visible_layout}' | grep -q '\{'; then
-        echo was zoomed, zooming out
         tmux resize-pane -Z
+    else
+        tmux select-pane -t:.$TMUX_PANE -P 'bg=yellow,fg=black'
+        sleep 0.3; tmux select-pane -t:.$TMUX_PANE -P 'bg=default,fg=default' &
     fi
     cat $directory/$filename
 done
