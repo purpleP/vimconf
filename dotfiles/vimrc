@@ -176,9 +176,8 @@ augroup END
 augroup AutoWrite
     au!
     au BufWritePre * call system('mkdir -p '.shellescape(expand('%:p:h')))
-    au BufWinEnter * silent! w
+    au BufWinEnter * silent! !touch %
     au TextChanged * silent! wall
-    au CursorHold * silent! wall
     au CursorHold * checktime
     au FocusLost * silent! wall
     au FocusGained * checktime
