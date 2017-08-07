@@ -23,6 +23,5 @@ tpope/vim-fugitive start
 tpope/vim-repeat start
 tpope/vim-surround start
 tpope/vim-unimpaired start
-w0rp/ale opt
 zchee/deoplete-clang start
 zchee/deoplete-jedi start
