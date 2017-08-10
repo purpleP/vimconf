@@ -22,23 +22,25 @@ function! AddBreakPoint()
 endfunction
 
 fu! OpenErrors(job_id, data, event)
-    let l:winid = win_getid()
-    let l:output = split(a:data[0])
-    echom l:output[0] . l:output[2]
-    let l:view = winsaveview()
-    exe 'silent! cfile! ' . escape(l:output[0] . l:output[2], '%#/')
-    call winrestview(l:view)
-    if len(getqflist()) > 0
-        copen
-    else
-        cclose
+    if mode() is 'n'
+        let l:winid = win_getid()
+        let l:file = a:data[0]
+        let l:view = winsaveview()
+        exe 'silent! cgetfile ' . escape(l:file, '%#/')
+        let l:num_errors = len(getqflist()) 
+        if l:num_errors > 0
+            exe 'belowright copen ' . string(l:num_errors)
+            call winrestview(l:view)
+            call win_gotoid(l:winid)
+        else
+            cclose
+        endif
     endif
-    call win_gotoid(l:winid)
 endfu
 
 if !exists('g:error_job')
     let g:lint_job = jobstart('~/vimconf/scripts/lint_monitor ' . getcwd() . ' py flake8', {}) 
-    let g:error_job = jobstart('inotifywait -m -r -q -e close_write /tmp/lint', {'on_stdout': function('OpenErrors')})
+    let g:error_job = jobstart('inotifywait -m -r -q -e close_write --format "%w%f" /tmp/lint', {'on_stdout': function('OpenErrors')})
 endif
 augroup Close
     au!

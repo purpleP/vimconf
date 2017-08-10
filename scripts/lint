@@ -16,6 +16,7 @@ def results_changed(results, file):
 
 path = sys.argv[-1]
 directory = Path('/tmp/lint')
+directory.mkdir(exist_ok=True)
 file = directory / Path(quote(path, safe=()))
 try:
     lint_results = check_output(sys.argv[1:])
