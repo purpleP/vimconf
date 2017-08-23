@@ -23,11 +23,16 @@ endfunction
 
 fu! OpenErrors(job_id, data, event)
     if mode() is 'n'
-        let l:winid = win_getid()
         let l:file = a:data[0]
+        let l:real = substitute(l:file[10:], '%2F', '/', 'g')
+        echom l:real
+        if !bufexists(l:real)
+            return
+        endif
+        let l:winid = win_getid()
         let l:view = winsaveview()
         exe 'silent! cgetfile ' . escape(l:file, '%#/')
-        let l:num_errors = len(getqflist()) 
+        let l:num_errors = len(getqflist())
         if l:num_errors > 0
             exe 'belowright copen ' . string(l:num_errors)
             call winrestview(l:view)
@@ -38,13 +43,40 @@ fu! OpenErrors(job_id, data, event)
     endif
 endfu
 
+let s:jobs = {}
+
+fu! CheckPending(fname, jobid, data, event)
+    if has_key(s:jobs, a:fname)
+        remove(s:jobs, a:fname)
+        call StartLint(a:fname)
+    endif
+endfu
+
+fu! StartLint(fname)
+    let l:cmd = [
+        \ $HOME . '/vimconf/scripts/lint',
+        \ 'flake8',
+        \ '--stdin-display-name=' . a:fname,
+        \ '-',
+        \ a:fname,
+        \ '--stdin',
+    \ ]
+    if !has_key(s:jobs, a:fname)
+        let l:jobid = jobstart(l:cmd, {'on_exit': function('CheckPending', [a:fname])})
+        call jobsend(l:jobid, join(getbufline(bufnr(a:fname), 1,'$'), "\n"))
+        call jobclose(l:jobid, 'stdin')
+    else
+        s:jobs[a:fname] = 1
+    endif
+endfu
+
 if !exists('g:error_job')
-    let g:lint_job = jobstart('~/vimconf/scripts/lint_monitor ' . getcwd() . ' py flake8', {}) 
     let g:error_job = jobstart('inotifywait -m -r -q -e close_write --format "%w%f" /tmp/lint', {'on_stdout': function('OpenErrors')})
 endif
-augroup Close
+augroup Lint
     au!
-    au VimLeave * call jobstop(g:lint_job) | call jobstop(g:lint_job)
+    au TextChanged,BufWinEnter *.py call StartLint(expand('%:p'))
+    au VimLeave *.py call jobstop(g:error_job)
 augroup END
 
 setlocal efm=%f:%l:%c:\ %t%n\ %m
