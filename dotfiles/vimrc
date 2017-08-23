@@ -193,7 +193,7 @@ augroup Language
     au InsertLeave * call SaveLayoutAndSwitch()
 augroup END
 
-set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l.%v/%L\ %p%%
+set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l:%v/%L\ %p%%
 augroup StatusLine
     au!
     au WinEnter,WinLeave,WinNew * redrawstatus!
