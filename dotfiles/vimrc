@@ -84,10 +84,10 @@ nnoremap <silent> <Esc>b :Denite buffer<CR>
 
 augroup SmartNumbers
     au!
-    au BufEnter,WinEnter * set number | set relativenumber
+    au BufEnter,WinEnter * if &buftype == '' | set number | set relativenumber | endif
     au BufLeave,WinLeave * set norelativenumber
     au FocusLost * set norelativenumber
-    au FocusGained * set relativenumber
+    au FocusGained * if &buftype == '' | set relativenumber | endif
 augroup END
 
 set ts=4 sts=4 sw=4 expandtab
