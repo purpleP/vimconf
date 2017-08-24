@@ -48,7 +48,7 @@ plugins ()
 # User configuration
 
 alias py=python3
-alias ipy=ipython
+alias ipy='ipython --TerminalInteractiveShell.highlighting_style=solarized_$(dark_or_light)'
 alias q='exit'
 alias t='tmux'
 alias vim='vim --cmd "set bg=$(dark_or_light)"'
