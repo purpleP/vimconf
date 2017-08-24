@@ -2,7 +2,6 @@ from traitlets.config import get_config
 from IPython.terminal import interactiveshell
 from pygments.style import Style
 from pygments.token import Keyword, Name, Comment, String, Error, Number, Token
-from pygments.formatters import TerminalTrueColorFormatter
 
 
 BASE03 = '#002b36'
@@ -22,9 +21,17 @@ BLUE = '#268bd2'
 CYAN = '#2aa198'
 GREEN = '#859900'
 
-
-solarized_true_color = {
+dark = {
     Comment: BASE01,
+    Name: BASE0,
+}
+
+light = {
+    Comment: BASE1,
+    Name: BASE00,
+}
+
+solarized_common = {
     Keyword.Constant: CYAN,
     Keyword.Declaration: BLUE,
     Keyword: GREEN,
@@ -34,8 +41,8 @@ solarized_true_color = {
     Name.Decorator: BLUE,
     Name.Exception: YELLOW,
     Name.Function: BLUE,
-    Name: BASE0,
     Number: CYAN,
+    Error: 'bold ' + RED,
     String.Backtick: RED,
     String.Char: CYAN,
     String.Doc: CYAN,
@@ -51,24 +58,34 @@ solarized_true_color = {
 }
 
 
-class SolarizedStyle(Style):
+class Solarized(Style):
     background_color = '#002b36'
-    styles = solarized_true_color
+
+
+class SolarizedLight(Solarized):
+    styles = {**solarized_common, **light}
+
+
+class SolarizedDark(Solarized):
+    styles = {**solarized_common, **dark}
 
 
 def get_style_by_name(name, original=interactiveshell.get_style_by_name):
-    return SolarizedStyle if name == 'base16' else original(name)
+    if name.startswith('solarized'):
+        return SolarizedDark if name.endswith('dark') else SolarizedLight
+    else:
+        return original(name)
 
 
 interactiveshell.get_style_by_name = get_style_by_name
 c = get_config()
 
-c.TerminalInteractiveShell.highlighting_style = 'base16'
+c.TerminalInteractiveShell.highlighting_style = 'solarized_dark'
 c.TerminalInteractiveShell.highlighting_style_overrides = {
     Token.Prompt: GREEN,
-    Token.PromptNum: '%s bold' % GREEN,
+    Token.PromptNum: 'bold ' + GREEN,
     Token.OutPrompt: RED,
-    Token.OutPromptNum: '%s bold' % RED
+    Token.OutPromptNum: 'bold ' + RED,
 }
 c.TerminalInteractiveShell.true_color = True
 c.TerminalInteractiveShell.editing_mode = 'vi'
