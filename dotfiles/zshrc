@@ -56,6 +56,7 @@ alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias trc='nvim ~/.tmux.conf'
+alias gpush='(git push origin $(git_current_branch) &>/dev/null && notify-send "pushed succesfully" || notify-send "push failed!") & disown'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && parallel pip install ::: ipython pytest pylint flake8'
 alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
 unalias gco
