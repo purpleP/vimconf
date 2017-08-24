@@ -1,2 +1,2 @@
 setlocal tw=80
-setlocal fo-=l
+setlocal fo+=a
