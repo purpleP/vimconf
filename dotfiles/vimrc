@@ -206,3 +206,19 @@ augroup UltSnipsOnDemand
 augroup END
 
 call autocomplete#setup_mappings()
+
+cnoremap <expr> <TAB> <SID>Search_next(1)
+cnoremap <expr> <S-TAB> <SID>Search_next(0)
+
+function! s:Search_next(forward)
+    if getcmdtype() == '/'
+        call feedkeys(a:forward ? "\<C-g>" : "\<C-t>" , 'tn')
+        return ''
+    elseif getcmdtype() == '?'
+        call feedkeys(a:forward ? "\<C-t>" : "\<C-g>" , 'tn')
+        return ''
+    else
+        call feedkeys("\<Tab>", 'tn')
+        return ''
+    endif
+endfunction
