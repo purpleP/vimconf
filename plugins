@@ -1,4 +1,3 @@
-AndrewRadev/switch.vim opt
 Shougo/denite.nvim start
 Shougo/deoplete.nvim start
 SirVer/ultisnips opt

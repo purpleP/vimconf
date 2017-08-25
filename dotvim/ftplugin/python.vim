@@ -39,21 +39,3 @@ augroup LintWhen
 augroup END
 
 setlocal efm=%f:%l:%c:\ %t%n\ %m
-
-let b:switch_custom_definitions =
-    \ [
-    \   {
-    \     '\v(^\s*)(<[a-z][a-zA-Z0-9_]* \=)': '\1return',
-    \   },
-    \   {
-    \     '\v(if|elif) ([a-z][a-zA-Z0-9_]*)': '\1 not \2',
-    \   },
-    \   {
-    \     '\v\.(\w+)': '[''\1'']',
-    \     '\v\[''([^'']+)''\]': '.\1',
-    \   },
-    \   ['==', '!='],
-    \   ['True', 'False'],
-    \ ]
-
-packadd switch.vim

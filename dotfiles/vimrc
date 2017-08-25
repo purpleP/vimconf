@@ -48,7 +48,7 @@ silent! colorscheme solarized
 let mapleader = "\<Space>"
 inoremap <C-l> <right>
 nnoremap <silent> <TAB> :noh<CR>
-nnoremap <silent> <leader>* :let @/='\<'.expand('<cword>').'\>' <bar> set hlsearch<CR>
+nnoremap <silent> <leader>* :let @/ = '\<' . expand('<cword>') . '\>' <bar> set hlsearch<CR>
 nnoremap <TAB> <C-w>w
 nnoremap <C-L> 20zl
 nnoremap <C-H> 20zh
@@ -222,3 +222,15 @@ function! s:Search_next(forward)
         return ''
     endif
 endfunction
+
+fu! s:Inline()
+    normal diw
+    call search(@" . ' = ', 'bs')
+    normal 2w
+    normal D
+    normal "_dd
+    execute "normal \<C-o>"
+    normal p
+endfu
+
+nnoremap <Leader>i :call <SID>Inline()<CR>
