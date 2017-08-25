@@ -50,6 +50,7 @@ inoremap <C-l> <right>
 nnoremap <silent> <TAB> :noh<CR>
 nnoremap <silent> <leader>* :let @/ = '\<' . expand('<cword>') . '\>' <bar> set hlsearch<CR>
 nnoremap <TAB> <C-w>w
+nnoremap <S-TAB> <C-w>p
 nnoremap <C-L> 20zl
 nnoremap <C-H> 20zh
 
@@ -200,12 +201,13 @@ augroup StatusLine
     au WinEnter,WinLeave,WinNew * redrawstatus!
 augroup END
 
+inoremap <silent> <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent> <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
 augroup UltSnipsOnDemand
     au!
-    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips | endif
+    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | call autocomplete#setup_mappings()| endif
 augroup END
-
-call autocomplete#setup_mappings()
 
 cnoremap <expr> <TAB> <SID>Search_next(1)
 cnoremap <expr> <S-TAB> <SID>Search_next(0)

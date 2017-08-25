@@ -1,7 +1,22 @@
+if exists('g:autocomplete_loaded')
+    return
+else
+    let g:autocomplete_loaded = 1
+endif
+let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+
 let g:expansion_active = 0
 let g:ulti_jump_backwards_res = 0
 let g:ulti_jump_forwards_res = 0
 let g:ulti_expand_res = 0
+
+augroup Autocomplete
+    au!
+    au! User UltiSnipsEnterFirstSnippet
+    au User UltiSnipsEnterFirstSnippet let g:expansion_active = 1
+    au! User UltiSnipsExitLastSnippet
+    au User UltiSnipsExitLastSnippet let g:expansion_active = 0
+augroup END
 
 fu! autocomplete#setup_mappings()
     inoremap <silent> <buffer> <TAB> <C-R>=autocomplete#expand_or_jump(1)<CR>
