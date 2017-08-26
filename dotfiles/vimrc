@@ -209,21 +209,8 @@ augroup UltSnipsOnDemand
     au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | call autocomplete#setup_mappings()| endif
 augroup END
 
-cnoremap <expr> <TAB> <SID>Search_next(1)
-cnoremap <expr> <S-TAB> <SID>Search_next(0)
-
-function! s:Search_next(forward)
-    if getcmdtype() == '/'
-        call feedkeys(a:forward ? "\<C-g>" : "\<C-t>" , 'tn')
-        return ''
-    elseif getcmdtype() == '?'
-        call feedkeys(a:forward ? "\<C-t>" : "\<C-g>" , 'tn')
-        return ''
-    else
-        call feedkeys("\<Tab>", 'tn')
-        return ''
-    endif
-endfunction
+cnoremap <expr> <Tab> get({'/': '<C-g>', '?': '<C-t>'}, getcmdtype(), "\t")
+cnoremap <expr> <S-Tab> get({'/': '<C-t>', '?': '<C-g>'}, getcmdtype(), "\t")
 
 fu! s:Inline()
     normal diw
