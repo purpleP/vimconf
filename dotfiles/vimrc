@@ -20,6 +20,7 @@ set splitbelow
 set splitright
 set termguicolors
 set virtualedit=insert
+set wildcharm=<TAB>
 set wildignore+=*.pyc,*.so,*.swp,*.zip,.*/**
 set wildmenu
 set winminheight=0
@@ -209,8 +210,8 @@ augroup UltSnipsOnDemand
     au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | call autocomplete#setup_mappings()| endif
 augroup END
 
-cnoremap <expr> <Tab> get({'/': '<C-g>', '?': '<C-t>'}, getcmdtype(), "\t")
-cnoremap <expr> <S-Tab> get({'/': '<C-t>', '?': '<C-g>'}, getcmdtype(), "\t")
+cnoremap <expr> <Tab> index(['/', '?'], getcmdtype()) == -1 ?  "<TAB>":"<C-G>" 
+cnoremap <expr> <S-Tab> index(['/', '?'], getcmdtype()) == -1 ? "<S-TAB>": "<C-T>" 
 
 fu! s:Inline()
     normal diw
