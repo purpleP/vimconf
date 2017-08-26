@@ -13,9 +13,9 @@ let g:ulti_expand_res = 0
 augroup Autocomplete
     au!
     au! User UltiSnipsEnterFirstSnippet
-    au User UltiSnipsEnterFirstSnippet let g:expansion_active = 1
+    au User UltiSnipsEnterFirstSnippet let g:expansion_active = 1 | setlocal fo-=a
     au! User UltiSnipsExitLastSnippet
-    au User UltiSnipsExitLastSnippet let g:expansion_active = 0
+    au User UltiSnipsExitLastSnippet let g:expansion_active = 0 | setlocal fo+=a
 augroup END
 
 fu! autocomplete#setup_mappings()
