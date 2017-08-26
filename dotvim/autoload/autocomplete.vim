@@ -1,5 +1,5 @@
 if exists('g:autocomplete_loaded')
-    return
+    finish
 else
     let g:autocomplete_loaded = 1
 endif
