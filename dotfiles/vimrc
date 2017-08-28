@@ -224,3 +224,9 @@ fu! s:Inline()
 endfu
 
 nnoremap <Leader>i :call <SID>Inline()<CR>
+
+augroup RestoreCursor
+    au!
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
+au FileType python let b:delimitMate_balance_matchpairs = 1
