@@ -5,13 +5,13 @@ Valloric/MatchTagAlways opt
 Vimjas/vim-python-pep8-indent start
 davidhalter/jedi-vim start
 eagletmt/neco-ghc opt
-jiangmiao/auto-pairs start
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim start
 purpleP/autouppercase start
 purpleP/lint start
 purpleP/python-syntax start
+purpleP/smartpairs start
 purpleP/vim-colors-solarized start
 tmux-plugins/vim-tmux-focus-events start
 tommcdo/vim-exchange start
