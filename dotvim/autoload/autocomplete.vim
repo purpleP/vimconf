@@ -29,11 +29,7 @@ fu! autocomplete#expand_or_jump(forward)
     call UltiSnips#ExpandSnippet()
     if g:ulti_expand_res == 0
         if pumvisible()
-            if a:forward
-                return "\<C-N>"
-            else
-                return "\<C-P>"
-            endif
+            return a:forward ? "\<C-N>" : "\<C-P>"
         else
             if g:expansion_active
                 if a:forward

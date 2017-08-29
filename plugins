@@ -3,7 +3,6 @@ Shougo/deoplete.nvim start
 SirVer/ultisnips opt
 Valloric/MatchTagAlways start
 Vimjas/vim-python-pep8-indent start
-eagletmt/neco-ghc opt
 kana/vim-textobj-user start
 autozimu/LanguageClient-neovim start
 michaeljsmith/vim-indent-object start
