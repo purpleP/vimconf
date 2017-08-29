@@ -19,7 +19,7 @@
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J' --cmd "set bg=$(dark_or_light)"
 [core]
-    excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore_global
     editor = nvim -c 'startinsert' --cmd \"set bg=$(dark_or_light)\"
 [interactive]
     diffFilter = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight

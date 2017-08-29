@@ -47,8 +47,6 @@ endif
 silent! colorscheme solarized
 
 let mapleader = "\<Space>"
-inoremap <C-l> <right>
-nnoremap <silent> <TAB> :noh<CR>
 nnoremap <silent> <leader>* :let @/ = '\<' . expand('<cword>') . '\>' <bar> set hlsearch<CR>
 nnoremap <TAB> <C-w>w
 nnoremap <S-TAB> <C-w>p
@@ -125,20 +123,12 @@ augroup Resize
     au WinEnter * call MaximizeOrNothing()
 augroup END
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 augroup ColorColumn
     au!
     autocmd WinEnter,BufEnter *.py\|*.vim\|*vimrc call matchadd('ColorColumn', '\%81v', 100)
 augroup END
 
 let g:python3_host_prog = $HOME.'/.venv/bin/python'
-let g:jedi#auto_initialization = 0
-let g:jedi#force_py_version = 3
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#smart_auto_mappings = 0
 
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
@@ -181,7 +171,7 @@ augroup AutoWrite
     au BufWritePre * call system('mkdir -p '.shellescape(expand('%:p:h')))
     au CursorHold * checktime
     au FocusLost * silent! wall
-    au FocusGained * silent! checktime
+    au FocusGained * if &ft != 'qf' | checktime | endif
 augroup END
 
 let g:last_insert_layout = system('keyboard_layout')
@@ -207,7 +197,7 @@ inoremap <silent> <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 augroup UltSnipsOnDemand
     au!
-    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | call autocomplete#setup_mappings()| endif
+    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | silent! call autocomplete#setup_mappings()| endif
 augroup END
 
 cnoremap <expr> <Tab> index(['/', '?'], getcmdtype()) == -1 ?  "<TAB>":"<C-G>" 
@@ -229,4 +219,12 @@ augroup RestoreCursor
     au!
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
-au FileType python let b:delimitMate_balance_matchpairs = 1
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls']
+    \ }
+
+" let g:LanguageClient_autoStart = 1
+augroup ClosePreview
+    au!
+    au InsertLeave * silent! pclose
+augroup END

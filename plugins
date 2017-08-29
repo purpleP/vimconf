@@ -1,15 +1,14 @@
 Shougo/denite.nvim start
 Shougo/deoplete.nvim start
 SirVer/ultisnips opt
-Valloric/MatchTagAlways opt
+Valloric/MatchTagAlways start
 Vimjas/vim-python-pep8-indent start
-davidhalter/jedi-vim start
 eagletmt/neco-ghc opt
 kana/vim-textobj-user start
+autozimu/LanguageClient-neovim start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim start
 purpleP/autouppercase start
-purpleP/lint start
 purpleP/python-syntax start
 purpleP/smartpairs start
 purpleP/vim-colors-solarized start
@@ -21,5 +20,3 @@ tpope/vim-fugitive start
 tpope/vim-repeat start
 tpope/vim-surround start
 tpope/vim-unimpaired start
-zchee/deoplete-clang start
-zchee/deoplete-jedi start
