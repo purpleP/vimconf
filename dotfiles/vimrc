@@ -171,7 +171,7 @@ augroup AutoWrite
     au BufWritePre * call system('mkdir -p '.shellescape(expand('%:p:h')))
     au CursorHold * checktime
     au FocusLost * silent! wall
-    au FocusGained * silent! checktime
+    au FocusGained * if &ft != 'qf' | checktime | endif
 augroup END
 
 let g:last_insert_layout = system('keyboard_layout')
