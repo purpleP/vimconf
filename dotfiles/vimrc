@@ -129,12 +129,6 @@ augroup ColorColumn
 augroup END
 
 let g:python3_host_prog = $HOME.'/.venv/bin/python'
-let g:jedi#auto_initialization = 0
-let g:jedi#force_py_version = 3
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#smart_auto_mappings = 0
 
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
@@ -225,4 +219,3 @@ augroup RestoreCursor
     au!
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
-au FileType python let b:delimitMate_balance_matchpairs = 1

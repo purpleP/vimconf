@@ -6,11 +6,10 @@ setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal expandtab
 
-nnoremap <silent> <buffer> <C-]> :call g:jedi#goto()<CR>
-nnoremap <silent> <buffer> K :call jedi#show_documentation()<CR>
-nnoremap <silent> <buffer> <leader>u :call jedi#usages()<CR>
+nnoremap <silent> <buffer> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <buffer> gd :call LanguageClient_textDocument_definition()<CR>
 
-augroup jedi_close
+augroup ClosePreview
     au!
     au CompleteDone * pclose
 augroup END
@@ -20,22 +19,9 @@ function! AddBreakPoint()
     let l:indentChar = ' '
     call append(l:line - 1, repeat(l:indentChar, indent(l:line)) . "import pdb;pdb.set_trace()")
 endfunction
-
-fu! MakeCmd(fname)
-    let l:cmd = [
-        \ $HOME . '/vimconf/scripts/lint',
-        \ 'flake8',
-        \ '--stdin-display-name=' . a:fname,
-        \ '-',
-        \ a:fname,
-        \ '--stdin',
-    \ ]
-    return l:cmd
-endfu
-
-augroup LintWhen
-    au!
-    au TextChanged,TextChangedI,BufWinEnter *.py call lint#StartLint(function('MakeCmd'), expand('%:p'))
-augroup END
-
-setlocal efm=%f:%l:%c:\ %t%n\ %m
+packadd LanguageClient-neovim
+if !exists('g:LanguageClient_serverCommands')
+    let g:LanguageClient_serverCommands = {}
+endif
+let g:LanguageClient_serverCommands['python'] = ['pyls']
+LanguageClientStart
