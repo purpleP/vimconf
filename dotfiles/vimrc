@@ -123,8 +123,6 @@ augroup Resize
     au WinEnter * call MaximizeOrNothing()
 augroup END
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 augroup ColorColumn
     au!
     autocmd WinEnter,BufEnter *.py\|*.vim\|*vimrc call matchadd('ColorColumn', '\%81v', 100)
