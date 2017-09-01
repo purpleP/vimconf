@@ -19,9 +19,13 @@ function! AddBreakPoint()
     let l:indentChar = ' '
     call append(l:line - 1, repeat(l:indentChar, indent(l:line)) . "import pdb;pdb.set_trace()")
 endfunction
-packadd LanguageClient-neovim
+
 if !exists('g:LanguageClient_serverCommands')
     let g:LanguageClient_serverCommands = {}
 endif
+
 let g:LanguageClient_serverCommands['python'] = ['pyls']
 LanguageClientStart
+
+let b:delimitMate_balance_matchpairs = 1
+let delimitMate_smart_quotes = '\%([^[:punct:][:space:]fubr]\|\%(\\\\\)*\\\)\%#\|\%#\%([^[:space:][:punct:]fubr]\)'
