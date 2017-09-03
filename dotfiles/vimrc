@@ -134,37 +134,36 @@ let g:python3_host_prog = $HOME.'/.venv/bin/python'
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
-let s:previous_search_pattern = ''
-let s:prev_search_disabled = 0
+let s:disable = 0
 
 fu! HlSearch()
-    let last_search_pattern = @/
-    let new_search = last_search_pattern != s:previous_search_pattern
-    if new_search
-       let s:prev_search_disabled = 0
+    if s:disable
+        let s:disable = 0
+        return
     endif
-    if new_search || s:prev_search_disabled == 0
-        if v:hlsearch
-            silent! if v:hlsearch && !search('\%#\zs'.@/,'cnW')
-                call StopHL()
-            endif
-        endif
+    silent! if !search('\%#\zs'.@/,'cnW')
+        call StopHL()
     endif
 endfu
 
 fu! StopHL()
-    if !v:hlsearch || mode() isnot 'n'
-        return
-    else
+    if v:hlsearch && mode() is 'n'
         sil call feedkeys("\<Plug>(StopHL)", 'm')
-        let s:prev_search_disabled = 1
+    endif
+endfu
+
+fu! Temp()
+    if matchstr(@", @/) == @"
+        let s:disable = 1
+    elseif search('\%#\zs'.@/,'cnW')
+        call StopHL()
     endif
 endfu
 
 augroup SearchHighlight
     au!
-    au CursorMoved * call HlSearch()
-    au InsertEnter * call StopHL()
+    au CursorMoved * if v:hlsearch | call HlSearch() | endif
+    au TextYankPost * if v:hlsearch | call Temp() | endif
 augroup END
 
 augroup AutoWrite
