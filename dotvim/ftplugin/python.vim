@@ -26,6 +26,3 @@ endif
 
 let g:LanguageClient_serverCommands['python'] = ['pyls']
 LanguageClientStart
-
-let b:delimitMate_balance_matchpairs = 1
-let delimitMate_smart_quotes = '\%([^[:punct:][:space:]fubr]\|\%(\\\\\)*\\\)\%#\|\%#\%([^[:space:][:punct:]fubr]\)'
