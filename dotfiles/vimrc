@@ -136,23 +136,23 @@ noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
 let s:disable = 0
 
-fu! HlSearch()
+fu! s:HlSearch()
     if s:disable
         let s:disable = 0
         return
     endif
     silent! if !search('\%#\zs'.@/,'cnW')
-        call StopHL()
+        call <SID>StopHL()
     endif
 endfu
 
-fu! StopHL()
+fu! s:StopHL()
     if v:hlsearch && mode() is 'n'
         sil call feedkeys("\<Plug>(StopHL)", 'm')
     endif
 endfu
 
-fu! Temp()
+fu! s:TurnOffOrKeepHL()
     if matchstr(@", @/) == @"
         let s:disable = 1
     elseif search('\%#\zs'.@/,'cnW')
@@ -162,8 +162,8 @@ endfu
 
 augroup SearchHighlight
     au!
-    au CursorMoved * if v:hlsearch | call HlSearch() | endif
-    au TextYankPost * if v:hlsearch | call Temp() | endif
+    au CursorMoved * if v:hlsearch | call <SID>HlSearch() | endif
+    au TextYankPost * if v:hlsearch | call <SID>TurnOffOrKeepHL() | endif
 augroup END
 
 augroup AutoWrite
