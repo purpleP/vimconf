@@ -134,38 +134,6 @@ let g:python3_host_prog = $HOME.'/.venv/bin/python'
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
-let s:disable = 0
-
-fu! s:HlSearch()
-    if s:disable
-        let s:disable = 0
-        return
-    endif
-    silent! if !search('\%#\zs'.@/,'cnW')
-        call <SID>StopHL()
-    endif
-endfu
-
-fu! s:StopHL()
-    if v:hlsearch && mode() is 'n'
-        sil call feedkeys("\<Plug>(StopHL)", 'm')
-    endif
-endfu
-
-fu! s:TurnOffOrKeepHL()
-    if matchstr(@", @/) == @"
-        let s:disable = 1
-    elseif search('\%#\zs'.@/,'cnW')
-        call StopHL()
-    endif
-endfu
-
-augroup SearchHighlight
-    au!
-    au CursorMoved * if v:hlsearch | call <SID>HlSearch() | endif
-    au TextYankPost * if v:hlsearch | call <SID>TurnOffOrKeepHL() | endif
-augroup END
-
 augroup AutoWrite
     au!
     au BufWritePre * call system('mkdir -p '.shellescape(expand('%:p:h')))
