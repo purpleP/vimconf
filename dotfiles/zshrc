@@ -119,9 +119,10 @@ function zle-line-init zle-keymap-select {
 PROMPT='%F{yellow}%c%f ${VIMODE} %# '
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-export PATH=$PATH:~/.cabal/bin
+for p in ~/.*/bin; do
+    PATH=$PATH:$p
+done
 export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
