@@ -123,8 +123,6 @@ for p in ~/.*/bin; do
     PATH=$PATH:$p
 done
 export MANPATH="/usr/local/man:$MANPATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
 if ! zgen saved; then
     echo 'Creating a zgen save'
