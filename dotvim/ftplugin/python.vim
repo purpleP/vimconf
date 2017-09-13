@@ -8,6 +8,7 @@ setlocal expandtab
 
 nnoremap <silent> <buffer> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <buffer> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <buffer> gr :call LanguageClient_textDocument_references()<CR>
 
 augroup ClosePreview
     au!
