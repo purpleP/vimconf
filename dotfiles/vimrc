@@ -168,6 +168,8 @@ augroup END
 cnoremap <expr> <Tab> index(['/', '?'], getcmdtype()) == -1 ?  "<TAB>":"<C-G>" 
 cnoremap <expr> <S-Tab> index(['/', '?'], getcmdtype()) == -1 ? "<S-TAB>": "<C-T>" 
 
+nnoremap <F12> <C-i>
+
 fu! s:Inline()
     normal diw
     call search(@" . ' = ', 'bs')
