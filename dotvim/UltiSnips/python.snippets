@@ -13,16 +13,14 @@ snippet i "import" b
 import 
 endsnippet
 
-snippet f "comprehension" "not in_imports(snip)" we
-${3:$1} for ${1:item} in ${2}
-endsnippet
-
-
-snippet for "for loop" "have_visual_placeholder(snip)" be
+snippet f "for loop" b
 for ${1:item} in ${2}:
     ${3:${VISUAL}}
 endsnippet
 
+snippet f "comprehension" w
+${3:$1} for ${1:item} in ${2}
+endsnippet
 
 snippet al "SqlAlchemy Column" b
 ${1} = Column(${2})
