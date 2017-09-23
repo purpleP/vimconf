@@ -173,7 +173,6 @@ setopt pushdminus
 setopt pushdsilent
 setopt pushdtohome
 
-
 export KEYTIMEOUT=1
 bindkey -v
 vi-append-x-selection () { RBUFFER=$(pbpaste </dev/null)$RBUFFER; }
