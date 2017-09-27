@@ -12,6 +12,7 @@ purpleP/autouppercase start
 purpleP/minimal_syntax start
 purpleP/smartpairs start
 purpleP/vim-colors-solarized start
+rust-lang/rust.vim start
 tmux-plugins/vim-tmux-focus-events start
 tommcdo/vim-exchange start
 tpope/vim-abolish start
