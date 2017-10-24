@@ -1,4 +1,4 @@
-source "$HOME/.zgen/zgen.zsh"
+source ~/.zplug/init.zsh
 DEFAULT_USER=$(whoami)
 
 # Uncomment the following line to use case-sensitive completion.
@@ -59,8 +59,6 @@ alias trc='nvim ~/.tmux.conf'
 alias gpush='(git push origin $(git_current_branch) &>/dev/null && notify-send "pushed succesfully" || notify-send "push failed!") & disown'
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && parallel pip install ::: ipython pytest pylint flake8'
 alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
-unalias gco
-alias gco='git branch | cut -c 3- | fzy | xargs git checkout'
 alias v='nvim'
 alias grep='grep --exclude-dir=".*" -I'
 
@@ -124,14 +122,17 @@ for p in ~/.*/bin; do
 done
 export MANPATH="/usr/local/man:$MANPATH"
 
-if ! zgen saved; then
-    echo 'Creating a zgen save'
-    zgen oh-my-zsh
-    zgen oh-my-zsh plugins/git
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-completions src
-    zgen load purpleP/autovenv
-    zgen save
+zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
+zplug "purpleP/autovenv"
+zplug "b4b4r07/enhacd"
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
 fi
 
 # You may need to manually set your language environment
@@ -199,8 +200,6 @@ mark_pane() {
 
 alias m='mark_pane'
 alias unm='rm /tmp/marked_panes 2>/dev/null'
-unalias gcl
 
 . ~/.nix-profile/etc/profile.d/nix.sh
-. ~/.zgen/enhancd/init.sh
 cd .
