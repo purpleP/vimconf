@@ -76,7 +76,7 @@ fu! g:DeniteInit()
     call denite#custom#var('file_rec', 'command', split(cmd))
     call denite#custom#source('grep', 'matchers', ['matcher_fuzzy'])
     call denite#custom#var('grep', 'default_opts', ['-Hn', '--exclude-dir=.*'])
-	call denite#custom#var('grep', 'pattern_opt', ['-P'])
+    call denite#custom#var('grep', 'pattern_opt', ['-P'])
     call denite#custom#var('grep', 'final_opts', [':directory'])
 endfu
 
@@ -139,17 +139,19 @@ augroup AutoWrite
     au FocusGained * if &buftype == '' | checktime | endif
 augroup END
 
-let g:last_insert_layout = system('keyboard_layout')
-fu! SaveLayoutAndSwitch()
+if executable('gsettings')
     let g:last_insert_layout = system('keyboard_layout')
-    silent! !keyboard_layout 0
-endfu
-
-augroup Language
-    au!
-    au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
-    au InsertLeave * call SaveLayoutAndSwitch()
-augroup END
+    fu! SaveLayoutAndSwitch()
+        let g:last_insert_layout = system('keyboard_layout')
+        silent! !keyboard_layout 0
+    endfu
+    
+    augroup Language
+        au!
+        au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
+        au InsertLeave * call SaveLayoutAndSwitch()
+    augroup END
+endif
 
 set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l:%v/%L\ %p%%
 augroup StatusLine
@@ -169,18 +171,6 @@ cnoremap <expr> <Tab> index(['/', '?'], getcmdtype()) == -1 ?  "<TAB>":"<C-G>"
 cnoremap <expr> <S-Tab> index(['/', '?'], getcmdtype()) == -1 ? "<S-TAB>": "<C-T>" 
 
 nnoremap <F12> <C-i>
-
-fu! s:Inline()
-    normal diw
-    call search(@" . ' = ', 'bs')
-    normal 2w
-    normal D
-    normal "_dd
-    execute "normal \<C-o>"
-    normal p
-endfu
-
-nnoremap <Leader>i :call <SID>Inline()<CR>
 
 augroup RestoreCursor
     au!
