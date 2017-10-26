@@ -74,7 +74,6 @@ TRAPWINCH() {
   zle &&  zle -R
 }
 
-zle -N zle-keymap-select
 zle -N edit-command-line
 
 bindkey -v
@@ -100,21 +99,7 @@ function fzy-file() {
 zle -N fzy-file
 bindkey "^S" fzy-file
 
-function zle-line-init zle-keymap-select {
-    if [[ $KEYMAP == 'vicmd' ]]; then
-        cursor='\E]50;CursorShape=0\C-G'
-        color='red'
-        mode='N'
-    else
-        cursor='\E]50;CursorShape=1\C-G'
-        color='green'
-        mode='I'
-    fi
-    [[ -n "$TMUX" ]]
-    VIMODE="%B%K{$color}%F{white}[$mode]%f%k%b"
-    zle reset-prompt
-}
-PROMPT='%F{yellow}%c%f ${VIMODE} %# '
+PROMPT='%F{yellow}%c%f %# '
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 for p in ~/.*/bin; do
