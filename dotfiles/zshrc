@@ -108,10 +108,10 @@ done
 export MANPATH="/usr/local/man:$MANPATH"
 
 zplug "plugins/git", from:oh-my-zsh
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
-zplug "purpleP/autovenv"
-zplug "b4b4r07/enhacd"
+zplug "purpleP/autovenv", use:new_auto.zsh
+zplug "b4b4r07/enhancd", use:init.sh
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -119,6 +119,7 @@ if ! zplug check --verbose; then
         echo; zplug install
     fi
 fi
+zplug load
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
