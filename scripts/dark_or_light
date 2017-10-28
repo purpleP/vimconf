@@ -29,4 +29,3 @@ bg_luminance() {
 }
 
 [[ $(bg_luminance) -ge 50 ]] && echo 'light' || echo 'dark'
-

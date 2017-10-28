@@ -48,11 +48,34 @@ plugins ()
 # User configuration
 
 alias py=python3
-alias ipy='ipython --TerminalInteractiveShell.highlighting_style=solarized_$(dark_or_light)'
 alias q='exit'
 alias t='tmux'
-alias vim='vim --cmd "set bg=$(dark_or_light)"'
-alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
+
+git config --global core.editor "nvim -c 'startinsert'"
+git config --global core.pager "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
+git config --global core.excludesfile "~/.gitignore_global"
+git config --global mergetool.vimdiff.cmd "nvim -d \$BASE \$LOCAL \$REMOTE \$MERGED -c '$wincmd w' -c 'wincmd J'"
+git config --global mergetool.prompt "true"
+git config --global merge.tool "vimdiff"
+git config --global diff.tool "vimdiff"
+git config --global difftool.prompt "false"
+git config --global difftool.path "vimdiff"
+git config --global alias.d "difftool"
+git config --global alias.a "!sh -c 'git add -- \"$@\" && git status' --"
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+git config --global pager.log "true"
+git config --global pager.show "true"
+git config --global pager.diff "true"
+git config --global interactive.diffFilter "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight"
+
+if ! [[ $(uname --kernel-release) =~ '.*Microsoft' ]] then
+    git config --global core.editor "nvim -c 'startinsert' --cmd \"set bg=$(dark_or_light)\""
+    git config --global mergetool.vimdiff "nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J' --cmd \"set bg=$(dark_or_light)\""
+    alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
+    alias vim='vim --cmd "set bg=$(dark_or_light)"'
+    alias ipy='ipython --TerminalInteractiveShell.highlighting_style=solarized_$(dark_or_light)'
+fi
+
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias trc='nvim ~/.tmux.conf'
@@ -167,15 +190,6 @@ zle -N vi-append-x-selection
 bindkey '^R' fzy-history-widget
 bindkey -M vicmd 'p' vi-append-x-selection
 bindkey -M vicmd '?' fzy-history-widget
-bindkey -r viins '\e'
-
-to-cmd-mode() {
-    keyboard_layout 0
-    zle vi-cmd-mode
-}
-zle -N to-cmd-mode
-
-bindkey -M viins '\e' to-cmd-mode
 
 mark_pane() {
     if [ -n "$TMUX_PANE" ]; then
