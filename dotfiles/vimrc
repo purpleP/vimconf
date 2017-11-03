@@ -124,20 +124,6 @@ augroup AutoWrite
     au FocusGained * if &buftype == '' | checktime | endif
 augroup END
 
-if executable('gsettings')
-    let g:last_insert_layout = system('keyboard_layout')
-    fu! SaveLayoutAndSwitch()
-        let g:last_insert_layout = system('keyboard_layout')
-        silent! !keyboard_layout 0
-    endfu
-    
-    augroup Language
-        au!
-        au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
-        au InsertLeave * call SaveLayoutAndSwitch()
-    augroup END
-endif
-
 set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l:%v/%L\ %p%%
 augroup StatusLine
     au!
