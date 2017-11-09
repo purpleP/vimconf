@@ -124,20 +124,6 @@ augroup AutoWrite
     au FocusGained * if &buftype == '' | checktime | endif
 augroup END
 
-if executable('gsettings')
-    let g:last_insert_layout = system('keyboard_layout')
-    fu! SaveLayoutAndSwitch()
-        let g:last_insert_layout = system('keyboard_layout')
-        silent! !keyboard_layout 0
-    endfu
-    
-    augroup Language
-        au!
-        au InsertEnter * silent! exe '!keyboard_layout ' . g:last_insert_layout
-        au InsertLeave * call SaveLayoutAndSwitch()
-    augroup END
-endif
-
 set statusline=%f\ %m\ %h\ %r\ %{winnr()}\%=%l:%v/%L\ %p%%
 augroup StatusLine
     au!
@@ -146,11 +132,6 @@ augroup END
 
 inoremap <silent> <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent> <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-augroup UltSnipsOnDemand
-    au!
-    au FileType * if filereadable($HOME . '/.vim/UltiSnips/' . &ft . '.snippets') | packadd ultisnips  | call autocomplete#setup_mappings()| endif
-augroup END
 
 cnoremap <expr> <Tab> index(['/', '?'], getcmdtype()) == -1 ?  "<TAB>":"<C-G>" 
 cnoremap <expr> <S-Tab> index(['/', '?'], getcmdtype()) == -1 ? "<S-TAB>": "<C-T>" 
