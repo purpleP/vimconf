@@ -61,7 +61,7 @@ alias v='nvim'
 alias grep='grep --exclude-dir=".*" -I'
 
 if ! [[ $(uname --kernel-release) =~ '.*Microsoft' ]] then
-    alias nvim='nvim --cmd "set bg=$(dark_or_light)" -c "call g:DeniteInit()"'
+    alias nvim='nvim --cmd "set bg=$(dark_or_light)"'
     alias vim='vim --cmd "set bg=$(dark_or_light)"'
     alias ipy='ipython --TerminalInteractiveShell.highlighting_style=solarized_$(dark_or_light)'
 fi
