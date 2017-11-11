@@ -45,6 +45,7 @@ if has('nvim')
 endif
 
 silent! colorscheme solarized
+set bg=dark
 
 let mapleader = "\<Space>"
 nnoremap <silent> <leader>* :let @/ = '\<' . expand('<cword>') . '\>' <bar> set hlsearch<CR>
