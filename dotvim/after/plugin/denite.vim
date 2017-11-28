@@ -10,3 +10,6 @@ call denite#custom#source('grep', 'matchers', ['matcher_fuzzy'])
 call denite#custom#var('grep', 'default_opts', ['-Hn', '--exclude-dir=.*'])
 call denite#custom#var('grep', 'pattern_opt', ['-P'])
 call denite#custom#var('grep', 'final_opts', [':directory'])
+
+nnoremap <silent> <Esc>f :Denite file_rec<CR>
+nnoremap <silent> <Esc>b :Denite buffer<CR>

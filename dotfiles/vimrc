@@ -66,9 +66,6 @@ augroup END
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#auto_complete_delay = 50
 
-nnoremap <silent> <Esc>f :Denite file_rec<CR>
-nnoremap <silent> <Esc>b :Denite buffer<CR>
-
 augroup SmartNumbers
     au!
     au BufEnter,WinEnter * if &buftype == '' | set number | set relativenumber | endif
