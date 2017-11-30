@@ -125,6 +125,7 @@ for p in ~/.*/bin; do
 done
 export MANPATH="/usr/local/man:$MANPATH"
 
+zplug "lib/history", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
@@ -166,7 +167,6 @@ export LC_CTYPE
 
 setopt autopushd
 setopt extended_glob
-setopt histignorealldups
 setopt histignorespace
 setopt noflowcontrol
 setopt pushdminus
