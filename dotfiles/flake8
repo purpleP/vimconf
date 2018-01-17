@@ -1,2 +1,5 @@
 [flake8]
-ignore = E501,W503,E306,E731,W292
+ignore = E501,W503,E306,E731,E722,W292
+
+[pycodestyle]
+ignore = E501,W503,E306,E731,E722,W292
