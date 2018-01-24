@@ -84,7 +84,8 @@ fzy-history-widget () {
 	local selected num
     selected=$(history | sort -k 2 | uniq -f 1 | sort -rn | sed 's/^\s*[0-9]\+ //' | fzy -l $LINES -q "$LBUFFER" | cut -c2-)
     zle -U $selected
-	zle redisplay
+    eval 'lBUFFER="$LBUFFER$selected_path"'
+	zle reset-prompt
 }
 zle -N fzy-history-widget
 
