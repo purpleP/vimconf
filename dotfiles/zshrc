@@ -176,7 +176,7 @@ setopt pushdtohome
 
 export KEYTIMEOUT=1
 bindkey -v
-vi-append-x-selection () { RBUFFER=$(pbpaste </dev/null)$RBUFFER; }
+vi-append-x-selection () { RBUFFER=$(clipout </dev/null)$RBUFFER; }
 zle -N vi-append-x-selection
 bindkey '^R' fzy-history-widget
 bindkey -M vicmd 'p' vi-append-x-selection
