@@ -9,7 +9,7 @@ fu! s:ShowDiagnostics()
         let l:view = winsaveview()
         let l:num_errors = len(getqflist())
         if l:num_errors > 0
-            exe 'belowright copen ' . string(l:num_errors)
+            exe 'belowright copen ' . string(min([l:num_errors, &lines / 2]))
             call win_gotoid(l:winid)
         else
             cclose
@@ -22,4 +22,5 @@ endfu
 augroup LanguageClientDiagnosticPopUp
     au!
     au User LanguageClientDiagnosticsChanged call s:ShowDiagnostics()
+    au CursorMoved,CursorMovedI,InsertEnter * cclose
 augroup END
