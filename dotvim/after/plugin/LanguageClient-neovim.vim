@@ -1,3 +1,5 @@
+let s:showed_diagnostics = 0
+
 fu! s:ShowDiagnostics()
     silent! augroup! ShowDiagnostics
     if mode() == 'i'
@@ -15,6 +17,15 @@ fu! s:ShowDiagnostics()
             cclose
         endif
         call winrestview(l:view)
+        let s:showed_diagnostics = 1
+    endif
+endfu
+
+
+fu! s:HideDiagnostics()
+    if &buftype != 'quickfix' && s:showed_diagnostics
+        cclose
+        let s:showed_diagnostics = 0
     endif
 endfu
 
@@ -22,5 +33,5 @@ endfu
 augroup LanguageClientDiagnosticPopUp
     au!
     au User LanguageClientDiagnosticsChanged call s:ShowDiagnostics()
-    au CursorMoved,CursorMovedI,InsertEnter * cclose
+    au CursorMoved,CursorMovedI,InsertEnter * call s:HideDiagnostics()
 augroup END
