@@ -1,3 +1,4 @@
+let g:LanguageClient_diagnosticsEnable = 0
 let s:showed_diagnostics = 0
 
 fu! s:ShowDiagnostics()
