@@ -54,10 +54,11 @@ alias t='tmux'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias trc='nvim ~/.tmux.conf'
-alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . && parallel pip install ::: ipython pytest pylint flake8'
+alias ls='ls --color=auto '
+alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . pip install ipython pytest pylint flake8'
 alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
-alias v='nvim'
-alias grep='grep --exclude-dir=".*" -I'
+alias v='nvim '
+alias grep='grep --color=auto --exclude-dir=".*" -I '
 
 case $(uname -r -o) in
     *Microsoft*Linux*)
@@ -84,7 +85,7 @@ fzy-history-widget () {
 	local selected num
     selected=$(history | sort -k 2 | uniq -f 1 | sort -rn | sed 's/^\s*[0-9]\+ //' | fzy -l $LINES -q "$LBUFFER" | cut -c2-)
     zle -U $selected
-    eval 'lBUFFER="$LBUFFER$selected_path"'
+    eval 'LBUFFER="$LBUFFER$selected_path"'
 	zle reset-prompt
 }
 zle -N fzy-history-widget
@@ -176,11 +177,9 @@ setopt pushdtohome
 
 export KEYTIMEOUT=1
 bindkey -v
-vi-append-x-selection () { RBUFFER=$(clipout </dev/null)$RBUFFER; }
-zle -N vi-append-x-selection
 bindkey '^R' fzy-history-widget
-bindkey -M vicmd 'p' vi-append-x-selection
 bindkey -M vicmd '?' fzy-history-widget
+bindkey '^w' backward-kill-word
 
 mark_pane() {
     if [ -n "$TMUX_PANE" ]; then
@@ -194,3 +193,4 @@ alias unm='rm /tmp/marked_panes 2>/dev/null'
 
 . ~/.nix-profile/etc/profile.d/nix.sh
 cd .
+test -z "$TMUX" && tmux
