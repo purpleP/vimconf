@@ -1,0 +1,10 @@
+#! /usr/bin/env zsh
+
+p=$1
+ext=$2
+shift
+shift
+inotifywait -m -r -q -e close_write --exclude='\/\.[^/]+\/' --format='%w%f' $p |
+while read -r filepath; do
+    [[ "$filepath" == *.$ext ]] && ~/vimconf/scripts/lint $@ $filepath
+done
