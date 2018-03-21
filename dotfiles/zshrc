@@ -51,7 +51,7 @@ alias t='tmux'
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias trc='nvim ~/.tmux.conf'
-alias ls='ls -lah --color=auto '
+alias ls='ls --color=auto '
 alias mkvenv='python3 -m venv .$(basename $(pwd)) && cd . pip install ipython pytest pylint flake8'
 alias findpid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzy | sed 's/^ *//' | cut -f1 -d' '"
 alias v='nvim '
