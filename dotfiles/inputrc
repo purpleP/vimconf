@@ -1,2 +1,6 @@
 set editing-mode vi
 set keymap vi
+set keymap vi-insert
+set show-mode-in-prompt on
+"C-r": history-search-backward
+set keymap vi
