@@ -47,7 +47,7 @@ DEFAULT_USER=$(whoami)
 plugins ()
 # User configuration
 
-alias t='tmux'
+alias t='tmux '
 alias vrc='nvim ~/.vimrc'
 alias zrc='nvim ~/.zshrc'
 alias trc='nvim ~/.tmux.conf'
@@ -117,7 +117,7 @@ bindkey "^S" fzy-file
 
 PROMPT='%F{yellow}%c%f %# '
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="/snap/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 for p in ~/.*/bin; do
     PATH=$PATH:$p
 done
