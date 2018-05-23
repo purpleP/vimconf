@@ -6,6 +6,8 @@ setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal expandtab
 
+setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+
 nnoremap <silent> <buffer> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> <buffer> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <buffer> gr :call LanguageClient_textDocument_references()<CR>
@@ -21,9 +23,16 @@ function! AddBreakPoint()
     call append(l:line - 1, repeat(l:indentChar, indent(l:line)) . "import pdb;pdb.set_trace()")
 endfunction
 
-if !exists('g:LanguageClient_serverCommands')
-    let g:LanguageClient_serverCommands = {}
-endif
-
-let g:LanguageClient_serverCommands['python'] = ['pyls']
-LanguageClientStart
+fu! StartLint(fname)
+    let l:cmd = [
+        \ $HOME . '/vimconf/scripts/lint',
+        \ 'flake8',
+        \ '--stdin-display-name=' . a:fname,
+        \ '-',
+        \ a:fname,
+        \ '--stdin',
+    \ ]
+    let l:jobid = jobstart(l:cmd)
+    call jobsend(l:jobid, join(getbufline(bufnr(a:fname), 1,'$'), "\n"))
+    call jobclose(l:jobid, 'stdin')
+endfu
