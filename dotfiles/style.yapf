@@ -1,0 +1,7 @@
+[style]
+based_on_style = pep8
+dedent_closing_brackets = true
+column_limit = 81
+split_penalty_bitwise_operator = 0
+split_penalty_excess_character = 0
+split_penalty_import_names = 0
