@@ -1,0 +1,12 @@
+hi! def link IdrisModule Keyword
+hi! def link IdrisLet Keyword
+hi! def link IdrisTotality Keyword
+hi! def link IdrisImplicit Keyword
+hi! def link IdrisAnnotation Keyword
+hi! def link IdrisStatement Keyword
+hi! def link IdrisWhere Keyword
+hi! def link IdrisConditional Keyword
+hi! def link IdrisVisibility Keyword
+hi! def link IdrisImport Include
+hi! def link IdrisStructure Keyword
+hi! def link IdrisType Structure
