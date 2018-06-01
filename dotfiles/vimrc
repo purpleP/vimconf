@@ -144,3 +144,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'python': ['pyls']
 \ }
+
+if &diff
+    syntax off
+endif
