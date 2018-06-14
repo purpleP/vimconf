@@ -5,12 +5,12 @@ SirVer/ultisnips opt
 Valloric/MatchTagAlways start
 Vimjas/vim-python-pep8-indent start
 autozimu/LanguageClient-neovim start
+idris-hackers/idris-vim start
 kana/vim-textobj-user start
 michaeljsmith/vim-indent-object start
 neovimhaskell/haskell-vim start
 purpleP/autouppercase start
 purpleP/python-syntax start
-idris-hackers/idris-vim start
 purpleP/vim-colors-solarized start
 rust-lang/rust.vim start
 tmux-plugins/vim-tmux-focus-events start
@@ -21,3 +21,4 @@ tpope/vim-fugitive start
 tpope/vim-repeat start
 tpope/vim-surround start
 tpope/vim-unimpaired start
+yuttie/comfortable-motion.vim start
